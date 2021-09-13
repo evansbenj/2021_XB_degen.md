@@ -122,3 +122,51 @@ foreach my $Parent_ID (sort keys %gene_hash){
 }	
 
 ```
+
+Now run this command:
+```perl
+#!/usr/bin/env perl
+use strict;
+use warnings;
+
+
+#  This program reads in coordinate files from a directory
+# and feeds them into a bash script that extracts sections using bcftools
+
+# to execute type ./Run_bcftools_with_lots_of_inputs.pl path_to_bed_files chr
+
+
+my $inputfile = $ARGV[0];
+	unless (open DATAINPUT, $inputfile) {
+		print "Can not find the input file.\n";
+		exit;
+	}
+my $chr = $ARGV[1];
+my @files = glob($inputfile.'/*coord');
+
+foreach ( @files ) {
+	print $_,"\n";
+	system( "./2021_bcftools_extract_sections_from_vcf.sh $_ $chr")
+}
+```
+
+Which evokes this bash script for each gene:
+```sh
+#!/bin/sh
+#SBATCH --job-name=bcftools
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --time=0:10:00
+#SBATCH --mem=2gb
+#SBATCH --output=bcftools.%J.out
+#SBATCH --error=bcftools.%J.err
+#SBATCH --account=def-ben
+
+# execute like this: ./2021_bcftools_extract_sections_from_vcf.sh path_and_filename_of_coordinate_file chr
+# load these modules before running:
+# module load StdEnv/2020 gcc/9.3.0 bcftools/1.11
+bcftools view -R ${1} /home/ben/projects/rrg-ben/ben/2021_Austin_XB_genome/MandF_WGS_filtered_and_removed_vcfs/al
+lsites_${2}.vcf.gz_filtered.vcf.gz_filtered_removed.vcf.gz -o ${1}.vcf
+```
+
+This should generate concatenated vcf files for each gene.
