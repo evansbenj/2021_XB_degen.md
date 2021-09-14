@@ -376,3 +376,32 @@ if( $n != int(length($XL)/3) ){
 }
 
 ```
+The script above can be evoked for a directory of files using this script:
+``` perl
+#!/usr/bin/env perl
+use strict;
+use warnings;
+
+
+#  This program reads in coordinate files from a directory
+# and feeds them into a bash script that extracts sections using bcftools
+
+# before executing load modules
+# module load StdEnv/2020 perl/5.30.2
+# to execute type ./Make_lots_of_paml_files.pl path_to_tab_files
+
+
+    
+my $inputfile = $ARGV[0];
+	unless (open DATAINPUT, $inputfile) {
+		print "Can not find the input file.\n";
+		exit;
+	}
+
+my @files = glob($inputfile.'/*tab');
+
+foreach ( @files ) {
+ #   print $_,"\n";
+	system( "./tab2paml.pl $_ $_\.paml_in")
+}
+```
