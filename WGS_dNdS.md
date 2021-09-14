@@ -170,3 +170,209 @@ lsites_${2}.vcf.gz_filtered.vcf.gz_filtered_removed.vcf.gz -o ${1}.vcf
 ```
 
 This should generate concatenated vcf files for each gene.
+
+Then I convert it to a tab using vcf2tab.pl:
+```perl
+#!/usr/bin/env perl
+use strict;
+use warnings;
+
+
+# This program makes tab files from each vcf file in a directory
+
+# before executing load modules
+# module load nixpkgs/16.09 intel/2018.3 vcftools/0.1.16
+# module load StdEnv/2020 perl/5.30.2
+# to execute type ./vcf2tab.pl path_to_vcf_files
+
+
+    
+my $inputfile = $ARGV[0];
+	unless (open DATAINPUT, $inputfile) {
+		print "Can not find the input file.\n";
+		exit;
+	}
+
+my @files = glob($inputfile.'/*vcf');
+
+foreach ( @files ) {
+ #   print $_,"\n";
+	system( "vcf-to-tab < $_ > $_.tab")
+}
+```
+
+Then I convert this to a paml file using tab2paml.pl:
+``` perl
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use List::MoreUtils qw/ uniq /;
+use List::Util qw( min max );
+
+
+#  This program reads in a tab delimited genotype file generated
+#  from vcftools and prints out a paml file 
+
+# Data should be from one chromosome
+
+# on graham, you (may) need to load perl first:
+# module load StdEnv/2020 perl/5.30.2
+
+# to execute type tab2paml.pl inputfile.tab output_paml_in 
+
+# From the paml doc:
+# In a sequence, T, C, A, G, U, t, c, a, g, u are recognized as nucleotides (for baseml, basemlg and
+# codonml), while the standard one-letter codes (A, R, N, D, C, Q, E, G, H, I, L, K, M, F, P, S, T, W,
+# Y, V or their lowercase equivalents) are recognized as amino acids. Ambiguity characters
+# (undetermined nucleotides or amino acids) are allowed as well. Three special characters ".", "-", and
+# "?" are interpreted like this: a dot means the same character as in the first sequence, a dash means an
+# alignment gap, and a question mark means an undetermined nucleotide or amino acid.
+
+# if cleandata = 0, both ambiguity characters and alignment gaps are treated
+# as ambiguity characters. In the pairwise distance calculation (the lower-diagonal distance matrix in
+# the output), cleandata = 1 means “complete deletion”, with all sites involving ambiguity characters
+# and alignment gaps removed from all sequences, while cleandata = 0 means “pairwise deletion”,
+# with only sites which have missing characters in the pair removed.
+
+# Thus this script will generate one seq for each diploid sequence and use ambiguity characters for heterozygous
+# positions, including Ns for deletions or heterozygous deletions
+
+# The analysis will use "cleandata = 0"
+
+# the analysis will include the XL reference seq, a pseudo-Wchr inferred from the female genotypes, 
+# and a pseudo-Z chr inferred from the female and male genotypes
+
+# For variable positions in XB, the pseudo-W chr will include female-specific SNPs
+# For variable positions in XB, the pseudo-Z chr will include SNPs that are homoz in males but heteroz in females
+# For example if the female and male genotypes are C/T and T/T respectively, the W gets the C and the Z gets the T
+# if the female and male are heterozygous, the position will be an N
+
+# I'll do the whole chr but it should not be accurate outside of the sex-linked region (>~55Mb)
+
+
+my $inputfile = $ARGV[0];
+my $outputfile2 = $ARGV[1];
+
+unless (open DATAINPUT, $inputfile) {
+	print "Can not find the input file.\n";
+	exit;
+}
+
+
+unless (open(OUTFILE2, ">$outputfile2"))  {
+	print "I can\'t write to $outputfile2\n";
+	exit;
+}
+print "Creating output file: $outputfile2\n";
+
+my $XL="";
+my $XB_male_SRR6357672_Z="";
+my $XB_female_SRR6357673_W="";
+
+my @alleles;
+my @temp;
+my @lengths;
+my $max;
+my $a;
+my $b;
+my $start;
+
+while ( my $line = <DATAINPUT>) {
+	chomp($line);
+	@temp=split(/[\/'\t']+/,$line);
+	if($temp[0] ne '#CHROM'){
+			# load each of the 4 XL alleles and the XL ref
+			for($a=2; $a<=6; $a++){
+				$alleles[$a-2]=$temp[$a]; # start index at zero
+			}	
+			# now see which is the longest
+			@lengths=();
+			for($a=0; $a<5; $a++){
+				push(@lengths,length($alleles[$a]));
+			}
+			$max = max @lengths;
+			#print $max;
+			# pad alleles if needed
+			my @temp_alleles;
+			for($a=0; $a<5; $a++){
+				@temp_alleles=split(//,$alleles[$a]);
+				if(($#temp_alleles+1) < $max){
+					for($b=($#temp_alleles+1); $b<$max; $b++){
+						$alleles[$a]=$alleles[$a]."-";
+					}	
+				}	
+			}		
+			# now the lengths should all be the same
+
+			# add the data to the chrs
+			# first do XL
+			$XL=$XL.$alleles[0];
+			# now do the XB male, which is the first genotype seq after the ref
+			if($alleles[1] eq $alleles[2]){
+				$XB_male_SRR6357672_Z=$XB_male_SRR6357672_Z.$alleles[1]; # no polymorphism on the Z
+			}
+			else{
+				for($b=0; $b<$max; $b++){
+					$XB_male_SRR6357672_Z=$XB_male_SRR6357672_Z."N"; # heterozygous positions in the male are coded as "N"
+				}
+			}	
+			if($alleles[3] eq $alleles[4]){
+				$XB_female_SRR6357673_W=$XB_female_SRR6357673_W.$alleles[3]; # no divergence between W and Z
+			}
+			else{ # find out which female allele is different from the male allele
+				if(($alleles[3] eq $alleles[1])&&($alleles[3] eq $alleles[2])){
+					$XB_female_SRR6357673_W=$XB_female_SRR6357673_W.$alleles[4]; # $alleles[4] is the W and $alleles[3] is the Z
+				}
+				elsif(($alleles[4] eq $alleles[1])&&($alleles[4] eq $alleles[2])){
+					$XB_female_SRR6357673_W=$XB_female_SRR6357673_W.$alleles[3]; # $alleles[3] is the W and $alleles[4] is the Z
+				}
+				else{ # the female alleles are both different from the male alleles or the male is heterozygous
+					for($b=0; $b<$max; $b++){
+						$XB_female_SRR6357673_W=$XB_female_SRR6357673_W."N";
+					}
+				}
+			}		
+			# should be done adding bases to each seq
+	} # end if to check for header of input file
+} # end while	
+close DATAINPUT;				
+
+# print out the lengths of each chr to see if we missed anything
+# print "Length of XL :",length($XL),"\n";
+# print "Length of Z :",length($XB_male_SRR6357672_Z),"\n";
+# print "Length of W :",length($XB_female_SRR6357673_W),"\n";
+
+# reversecomplement if needed
+if(substr($inputfile,-17) eq "_rc.coord.vcf.tab"){
+	my $XL_revcom=reverse $XL;
+	my $XB_male_SRR6357672_Z_revcom=reverse $XB_male_SRR6357672_Z;
+	my $XB_female_SRR6357673_W_revcom=reverse $XB_female_SRR6357673_W;
+	$XL_revcom =~ tr/ACGTacgt/TGCAtgca/;
+	$XB_male_SRR6357672_Z_revcom =~ tr/ACGTacgt/TGCAtgca/;
+	$XB_female_SRR6357673_W_revcom =~ tr/ACGTacgt/TGCAtgca/;
+
+	$XL = $XL_revcom;
+	$XB_male_SRR6357672_Z = $XB_male_SRR6357672_Z_revcom;
+	$XB_female_SRR6357673_W = $XB_female_SRR6357673_W_revcom;
+}
+
+
+# OK print out the fasta file
+
+print OUTFILE2 "3 ",length($XL),"\n";
+print OUTFILE2 "XL     ";
+print OUTFILE2 $XL,"\n";
+print OUTFILE2 "XB_W     ";
+print OUTFILE2 $XB_female_SRR6357673_W,"\n";
+print OUTFILE2 "XB_Z     ";
+print OUTFILE2 $XB_male_SRR6357672_Z,"\n";
+
+
+close OUTFILE2;
+my $n = length($XL)/3;
+
+if( $n != int(length($XL)/3) ){
+	print "This infile not multiples of 3: ",$inputfile," ",length($XL),"\n";
+}
+
+```
