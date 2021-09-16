@@ -92,4 +92,6 @@ close DATAINPUT;
 close OUTFILE;
 ```
 
-Let's do this on the Wundyani population first.  The heat plot suggests there are hundreds of tags that are present in zero males and five females but only 5-24 tags that are present in zero females and 5 males.
+Let's do this on the Wundyani population first.  The heat plot suggests there are hundreds of tags that are present in zero males and five females but only 5-24 tags that are present in zero females and 5 males. The script identified 228 tags in zero males and five females but only 31 in five males and zero females.
+
+OK let's blast them to the XL genome and summarize the chr and location that they are on.
