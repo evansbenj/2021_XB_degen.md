@@ -95,3 +95,16 @@ close OUTFILE;
 Let's do this on the Wundyani population first.  The heat plot suggests there are hundreds of tags that are present in zero males and five females but only 5-24 tags that are present in zero females and 5 males. The script identified 228 tags in zero males and five females but only 31 in five males and zero females.
 
 OK let's blast them to the XL genome and summarize the chr and location that they are on.
+
+Load blast
+```
+module load StdEnv/2020  gcc/9.3.0 blast+/2.11.0
+```
+Create a blastable db:
+```
+makeblastdb -in XENLA_9.2_genome.fa -dbtype nucl -out XENLA_9.2_genome.fa_blastable
+```
+Use the RADsex tags as a blast query:
+```
+blastn -query XXX.fa -db /home/ben/projects/rrg-ben/ben/2020_XL_v9.2_refgenome/XENLA_9.2_genome.fa_blastable -outfmt 6 -out XXX_to_XL_v9.2_genome 
+```
