@@ -164,3 +164,11 @@ Now it makes much more sense.  Most of the hits that match only one chr are the 
 3132459	Scaffold46	496190
 741346	Scaffold65754	192!
 ```
+
+but only a few random ones for the tags that are present in 5 males but no females:
+```
+chr7S	17942427	1
+chr2L	55974566	1
+chr5L	146271619	1
+
+```
