@@ -1,0 +1,95 @@
+# XB RADsex
+
+Previous analyses were done by population on graham here:
+```
+/home/ben/projects/rrg-ben/ben/2020_radsex/bin
+```
+
+I wrote a script to pull out RADsex tags that are present in n males and m females:
+```
+#!/usr/bin/env perl
+use strict;
+use warnings;
+
+
+# This program will extract a fasta file from a RADsex marker file
+# that is present in exactly x Males and exactly y Females
+
+# It assumes the sample names begin with "Fem" or "Mal" to indicate the sex
+
+# execute like this:
+# ./Gets_RADsex_tags.pl infile n_male_tags n_female_tags
+
+# on computecanada, first load perl: module load StdEnv/2020 perl/5.30.2
+
+my $inputfile1 = $ARGV[0];
+my $n_male_tags = $ARGV[1];
+my $n_female_tags = $ARGV[2];
+
+unless (open DATAINPUT, $inputfile1) {
+	print "Can not find the input file.\n";
+	exit;
+}
+
+my $outputfile = $inputfile1."_".$n_male_tags."_Males_".$n_female_tags."_Females.fasta"; # the name of the output file is from the commandline
+unless (open(OUTFILE, ">$outputfile"))  {
+	print "I can\'t write to $outputfile\n";
+	exit;
+}
+
+my @sex;
+my $counter=0;
+my $y;
+my $females=0;
+my $males=0;
+my @temp;
+
+while ( my $line = <DATAINPUT>) {
+	chomp($line);
+	@temp=split('\t',$line);
+	if(substr($temp[0], 0, 1) ne '#'){ # ignores first line
+		if($temp[0] eq 'id'){ 
+			for ($y = 0 ; $y < ($#temp+1); $y++ ) {
+				if($temp[$y] =~ /^Fem/){
+					$sex[$counter]=1; # this is a female
+				}
+				elsif(substr($temp[$y],0,3) eq "Mal"){
+					$sex[$counter]=2; # this is a male
+				}
+				else{
+					$sex[$counter]=0; # this is an index that is not a sample - id or seq
+				}
+				$counter+=1
+			}
+			print "hello @sex\n";	
+		}
+		else{ 
+			for ($y = 2 ; $y < ($#sex+1); $y++ ) {
+				if($sex[$y] == 1){
+					if($temp[$y] > 0){
+						$females+=1;
+					}
+				}
+				elsif($sex[$y] == 2){
+					if($temp[$y] > 0){
+						$males+=1;
+					}
+				}
+				else{
+					print "Something weird\n";
+				}
+			}
+			# print $females," ",$males,"\n";
+			if(($females==$n_female_tags)&&($males==$n_male_tags)){
+				print OUTFILE ">",$temp[0],"\n",$temp[1],"\n";
+			}
+		}
+		$females=0;
+		$males=0;
+	}	
+}		
+close DATAINPUT;
+close OUTFILE;
+```
+
+Let's do this on the Wundyani population first.  The heat plot suggests there are hundreds of tags that are present in zero males and five females but only 5-24 tags that are present in zero females and 5 males.
