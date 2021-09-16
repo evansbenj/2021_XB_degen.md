@@ -222,3 +222,15 @@ Mal_Lukhome_BJE4447_Xb	1	85	136	27	0	101	26	30	0	0
 
 
 Also let's do the same thing for the west population to see if any sex-specific tags are clustered in the genome.
+
+First I made a male-specific file like this:
+```
+ls westkenya_markers_table.tsv_*_Males_0_Females.fasta
+	westkenya_markers_table.tsv_10_Males_0_Females.fasta
+	westkenya_markers_table.tsv_6_Males_0_Females.fasta
+	westkenya_markers_table.tsv_7_Males_0_Females.fasta
+	westkenya_markers_table.tsv_8_Males_0_Females.fasta
+	westkenya_markers_table.tsv_9_Males_0_Females.fasta
+cat westkenya_markers_table.tsv_*_Males_0_Females.fasta > westkenya_markers_table.tsv_6ormore_Males_0_Females.fasta
+```
+This file has 403 seqs. For comparison, for 6 males 0 females there are 261 seqs but for 0 males and 6 females there are only 47 seqs.  So I think we may have a good signal of a Y chr here, which is expected if the Z chr from the east went extinct.
