@@ -118,4 +118,17 @@ cut -f2,9 wundyanimarkers_table.tsv_0_Males_5_Females.fasta_to_XL_v9.2_genome > 
 cut -f2,9 wundyanimarkers_table.tsv_5_Males_0_Females.fasta_to_XL_v9.2_genome > wundyanimarkers_table.tsv_5_Males_0_Females_hits_to_XL_chr_start
 ```
 
-Results are bizarre - female-specific tags don't map to the sex-linked portion of chr8L very much even though we know that this region has very high Fst.
+Results are bizarre - female-specific tags don't map to the sex-linked portion of chr8L very much even though we know that this region has very high Fst. This is probably because I only saved the top hit and many tags probably map to repetitive regions.  Instead I'll try saving all hits and only looking at the ones with one match.
+```
+blastn -query wundyanimarkers_table.tsv_0_Males_5_Females.fasta -db /home/ben/projects/rrg-ben/ben/2020_XL_v9.2_refgenome/XENLA_9.2_genome.fa_blastable -outfmt 6 -out ./wundyanimarkers_table.tsv_0_Males_5_Females.fasta_to_XL_v9.2_genome 
+
+blastn -query wundyanimarkers_table.tsv_5_Males_0_Females.fasta -db /home/ben/projects/rrg-ben/ben/2020_XL_v9.2_refgenome/XENLA_9.2_genome.fa_blastable -outfmt 6 -out ./wundyanimarkers_table.tsv_5_Males_0_Females.fasta_to_XL_v9.2_genome 
+
+```
+Now extract the chr and coord of each hit plus the query ID:
+```
+cut -f1,2,9 wundyanimarkers_table.tsv_0_Males_5_Females.fasta_to_XL_v9.2_genome > wundyanimarkers_table.tsv_0_Males_5_Females_hits_to_XL_chr_start
+cut -f1,2,9 wundyanimarkers_table.tsv_5_Males_0_Females.fasta_to_XL_v9.2_genome > wundyanimarkers_table.tsv_5_Males_0_Females_hits_to_XL_chr_start
+```
+
+Now it makes much more sense.  Most of the hits that match only one chr are the sexlinked region of chr8L.
