@@ -131,4 +131,36 @@ cut -f1,2,9 wundyanimarkers_table.tsv_0_Males_5_Females.fasta_to_XL_v9.2_genome 
 cut -f1,2,9 wundyanimarkers_table.tsv_5_Males_0_Females.fasta_to_XL_v9.2_genome > wundyanimarkers_table.tsv_5_Males_0_Females_hits_to_XL_chr_start
 ```
 
-Now it makes much more sense.  Most of the hits that match only one chr are the sexlinked region of chr8L.
+Now it makes much more sense.  Most of the hits that match only one chr are the sexlinked region of chr8L (RADsextagID top_blasthit_chr top_blast_hit_pos):
+```
+2687211	chr1L	20661677
+2657416	chr2L	108211134
+1517301	chr3S	95007302
+3553996	chr4L	27940848
+1539712	chr5L	140476576
+1622854	chr7L	98505191
+2116651	chr8L	1104005
+2583453	chr8L	2871025
+2562926	chr8L	4095162
+1619047	chr8L	6047829
+3248976	chr8L	6317146
+1845941	chr8L	6320724
+1592582	chr8L	23170900
+2898615	chr8L	30571400
+1955550	chr8L	37306450
+2121067	chr8L	37957683
+3005912	chr8L	43509703
+3569224	chr8L	43586650
+1623984	chr8L	45286872
+1612167	chr8L	46048421
+1642858	chr8L	46428193
+914951	chr8L	99758497
+1529226	chr8S	29279390
+1599749	chr8S	53967835
+2616460	chr8S	54547471
+2122762	chr8S	56807904
+1711234	Scaffold158	48922
+4347507	Scaffold36	1051525
+3132459	Scaffold46	496190
+741346	Scaffold65754	192!
+```
