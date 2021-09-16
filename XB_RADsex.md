@@ -234,3 +234,12 @@ ls westkenya_markers_table.tsv_*_Males_0_Females.fasta
 cat westkenya_markers_table.tsv_*_Males_0_Females.fasta > westkenya_markers_table.tsv_6ormore_Males_0_Females.fasta
 ```
 This file has 403 seqs. For comparison, for 6 males 0 females there are 261 seqs but for 0 males and 6 females there are only 47 seqs.  So I think we may have a good signal of a Y chr here, which is expected if the Z chr from the east went extinct.
+
+Blast these putative male-specific seqs against the XL genome:
+```
+blastn -query westkenya_markers_table.tsv_6ormore_Males_0_Females.fasta -db /home/ben/projects/rrg-ben/ben/2020_XL_v9.2_refgenome/XENLA_9.2_genome.fa_blastable -outfmt 6 -out ./westkenya_markers_table.tsv_6ormore_Males_0_Females.fasta_to_XL_v9.2_genome 
+```
+Now extract the chr and coord of each hit plus the query ID:
+```
+cut -f1,2,9 westkenya_markers_table.tsv_6ormore_Males_0_Females.fasta_to_XL_v9.2_genome  > westkenya_markers_table.tsv_6ormore_Males_0_Females_hits_to_XL_chr_start
+```
