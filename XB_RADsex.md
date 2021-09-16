@@ -172,3 +172,7 @@ chr2L	55974566	1
 chr5L	146271619	1
 
 ```
+
+To do: check the west population to see if these tags are there at all, and if so whether they are female-specific
+
+Also let's do the same thing for the west population to see if any sex-specific tags are clustered in the genome.
