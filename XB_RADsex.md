@@ -297,4 +297,4 @@ Chr7L may be the sex-linked one...although chr8L has several make-specific tags 
 2702692	Scaffold49	334021
 1618524	Scaffold73	370389
 ```
-Blasts of Scaffold20 to XT suggest it is on chr3. Scaffold28 is probably on chr5. Scaffold31 is ~50Mb in XT on chr3.
+Blasts of Scaffold20 to XT suggest it is on chr3. Scaffold28 is probably on chr5. Scaffold31 is ~50Mb in XT on chr3. Scaffold40682 is on chr8 !25Mb in XT.
