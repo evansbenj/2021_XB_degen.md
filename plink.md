@@ -55,7 +55,7 @@ plink --vcf XB_westonly_unfiltered_allchrs.vcf.gz --recode --const-fid 0 --chr-s
 plink --file XB_westonly_unfiltered_allchrs.vcf.gz_myplink --pheno west_sample_sex --assoc --allow-no-sex --allow-extra-chr 
 mv plink.assoc XB_westonly_unfiltered_allchrs.vcf.gz_plink.assoc
 
-plink --vcf XB_Njoro_only_unfiltered_allchrs.vcf.gz --recode --const-fid 0 --chr-set 36 no-y no-xy no-mt --allow-extra-chr --out XB_Njoro_only_unfiltered_allchrs.vcf.gz_myplink
+plink --vcf XB_Njoroonly_unfiltered_allchrs.vcf.gz --recode --const-fid 0 --chr-set 36 no-y no-xy no-mt --allow-extra-chr --out XB_Njoro_only_unfiltered_allchrs.vcf.gz_myplink
 plink --file XB_Njoro_only_unfiltered_allchrs.vcf.gz_myplink --pheno Njoro_sample_sex --assoc --allow-no-sex --allow-extra-chr 
 mv plink.assoc XB_Njoro_only_unfiltered_allchrs.vcf.gz_plink.assoc
 ```
