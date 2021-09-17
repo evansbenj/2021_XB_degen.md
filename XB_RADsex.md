@@ -219,7 +219,19 @@ Mal_Lukhome_BJE4443_Xb	0	52	17	6	0	47	34	0	0	0
 Mal_Lukhome_BJE4447_Xb	1	85	136	27	0	101	26	30	0	0
 
 ```
-
+I can also search for the other east-female-specific tags in the west by allowing for one mismatch (-1) like this:
+```
+./agrep/agrep -1 "TGCAGGCCAAATCTTGCTTGTGCACTCACTTCCTGTTTCCTGCCTGACAGGAAGTGCAGATTTGGGAGCTCCTGAACCCCATTCATTTCAC" westkenya_markers_table.tsv > east_female_specific_in_west_one_mismatch
+./agrep/agrep -1 "TGCAGGCATGGGGCTACACAGACAGCACTTGCTCAGAAAGTATTTAGGCAACTATTAAGTACATTACATTATCCCCCTGGACTCCCTGTAT" westkenya_markers_table.tsv >> east_female_specific_in_west_one_mismatch
+./agrep/agrep -1 "TGCAGGAGGAACACACTGAGCAGCAGAGACAGGGAGGAGCATCCACCTGCTGCAAGCACAGCACTCTCCCTCACTCTCTCTCTCACTTCTT" westkenya_markers_table.tsv >> east_female_specific_in_west_one_mismatch
+./agrep/agrep -1 "TGCAGGCTTTATAAATGGATTAGGAAGAAGAAAAGGCTCCATTGGCTTCATTACAGGGAATATATCCCCATTTTTTACTTGAGCTCATGCA" westkenya_markers_table.tsv >> east_female_specific_in_west_one_mismatch
+./agrep/agrep -1 "TGCAGGATGTCAAAAGTGATTTAGCTTGGTCTAGTCTATATCAATTAACACAGCTACTATAATAGTGCTGACTGCAGCAGCTGACCTGCTA" westkenya_markers_table.tsv >> east_female_specific_in_west_one_mismatch
+./agrep/agrep -1 "TGCAGGGGCTTTACCTGTCAGCTGCATCTGTGCCGAAGAGTCAGTACTGTCAGGGGACTATGGCTTCACCCTGAATGAACGTACAGCCATG" westkenya_markers_table.tsv >> east_female_specific_in_west_one_mismatch
+./agrep/agrep -1 "TGCAGGCCCGGGAAGTCCAATGCCTGGAACCCCTGGTTCTCCCTTTGCACCTGAAACACCTGGAATTCCTGGCTGACCAGGCAGACCTGGT" westkenya_markers_table.tsv >> east_female_specific_in_west_one_mismatch
+./agrep/agrep -1 "TGCAGGACGCCCTAGGTAAGTCTTCAGCATCTTGCATTTGGTCTTCTGAGGAGTCTGTTTCATTGGCTGTAAGACCTGAAGCTGCTTCTCC" westkenya_markers_table.tsv >> east_female_specific_in_west_one_mismatch
+./agrep/agrep -1 "TGCAGGAAAGGCGGTAATAACTATGTTTGTAACATGATGACTTTGCATCCCTCTATAATAACTTCACTTTTAAGTATAATATTTTCAGTAG" westkenya_markers_table.tsv >> east_female_specific_in_west_one_mismatch
+```
+nomatches
 
 Also let's do the same thing for the west population to see if any sex-specific tags are clustered in the genome.
 
