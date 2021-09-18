@@ -35,6 +35,13 @@ concatenate:
 module load StdEnv/2020 vcftools/0.1.16
 vcf-concat DB_chr1L_out.vcf DB_chr1S_out.vcf DB_chr2L_out.vcf DB_chr2S_out.vcf DB_chr3L_out.vcf DB_chr3S_out.vcf DB_chr4L_out.vcf DB_chr4S_out.vcf DB_chr5L_out.vcf DB_chr5S_out.vcf DB_chr6L_out.vcf DB_chr6S_out.vcf DB_chr7L_out.vcf DB_chr7S_out.vcf DB_chr8L_out.vcf DB_chr8S_out.vcf DB_chr9_10L_out.vcf DB_chr9_10S_out.vcf | gzip -c > XB_unfiltered_allchrs.vcf.gz
 ```
+Or filter to include only chrs for XB_Au
+``
+module load StdEnv/2020  gcc/9.3.0 bcftools/1.11
+
+bcftools view mpileup_raw_wildBorealis_AuXXXGenome.vcf.gz --regions Chr1L,Chr1S,Chr2L,Chr2S,Chr3L,Chr3S,Chr4L,Chr4S,Chr5L,Chr5S,Chr6L,Chr6S,Chr7L,Chr7S,Chr8L,Chr8S,Chr9_10L,Chr9_10S -O z -o mpileup_raw_wildBorealis_AuXXXGenome_Chrs_only.vcf.gz
+``
+
 Subset populations
 ```
 vcf-subset -c Fem_Cheplaskei_BJE4459_Xb.fq.gz,Fem_Cheplaskei_BJE4461_Xb.fq.gz,Fem_Cheplaskei_BJE4470_Xb.fq.gz,Fem_Chesuwe_BJE4479_Xb.fq.gz,Fem_Chesuwe_BJE4481_Xb.fq.gz,Fem_Eldoret_BJE4471_Xb.fq.gz,Fem_Eldoret_BJE4472_Xb.fq.gz,Fem_Eldoret_BJE4474_Xb.fq.gz,Fem_Eldoret_BJE4475_Xb.fq.gz,Fem_Eldoret_BJE4476_Xb.fq.gz,Fem_Kiminini_BJE4429_Xb.fq.gz,Fem_Kiminini_BJE4433_Xb.fq.gz,Fem_Lukhome_BJE4441_Xb.fq.gz,Fem_Lukhome_BJE4444_Xb.fq.gz,Fem_Lukhome_BJE4445_Xb.fq.gz,Fem_Lukhome_BJE4446_Xb.fq.gz,Mal_Cheplaskei_BJE4460_Xb.fq.gz,Mal_Cheplaskei_BJE4462_Xb.fq.gz,Mal_Cheplaskei_BJE4465_Xb.fq.gz,Mal_Cheplaskei_BJE4469_Xb.fq.gz,Mal_Chesuwe_BJE4477_Xb.fq.gz,Mal_Chesuwe_BJE4478_Xb.fq.gz,Mal_Chesuwe_BJE4480_Xb.fq.gz,Mal_Eldoret_BJE4473_Xb.fq.gz,Mal_Kiminini_BJE4430_Xb.fq.gz,Mal_Kiminini_BJE4431_Xb.fq.gz,Mal_Kiminini_BJE4432_Xb.fq.gz,Mal_Kisumu_BJE4391_Xb.fq.gz,Mal_Lukhome_BJE4442_Xb.fq.gz,Mal_Lukhome_BJE4443_Xb.fq.gz,Mal_Lukhome_BJE4447_Xb.fq.gz XB_unfiltered_allchrs.vcf.gz | bgzip -c > XB_westonly_unfiltered_allchrs.vcf.gz
@@ -48,6 +55,20 @@ vcf-subset -c Fem_Nakuru_BJE4363_Xb.fq.gz,Fem_Nakuru_BJE4364_Xb.fq.gz,Fem_Nakuru
 vcf-subset -c Fem_Cheplaskei_BJE4459_Xb.fq.gz,Fem_Cheplaskei_BJE4461_Xb.fq.gz,Fem_Cheplaskei_BJE4470_Xb.fq.gz,Fem_Chesuwe_BJE4479_Xb.fq.gz,Fem_Chesuwe_BJE4481_Xb.fq.gz,Fem_Eldoret_BJE4471_Xb.fq.gz,Fem_Eldoret_BJE4472_Xb.fq.gz,Fem_Eldoret_BJE4474_Xb.fq.gz,Fem_Eldoret_BJE4475_Xb.fq.gz,Fem_Eldoret_BJE4476_Xb.fq.gz,Fem_Kiminini_BJE4429_Xb.fq.gz,Fem_Kiminini_BJE4433_Xb.fq.gz,Fem_Lukhome_BJE4441_Xb.fq.gz,Fem_Lukhome_BJE4444_Xb.fq.gz,Fem_Lukhome_BJE4445_Xb.fq.gz,Fem_Lukhome_BJE4446_Xb.fq.gz,Fem_Nakuru_BJE4363_Xb.fq.gz,Fem_Nakuru_BJE4364_Xb.fq.gz,Fem_Nakuru_BJE4367_Xb.fq.gz,Fem_Nakuru_BJE4368_Xb.fq.gz,Mal_Cheplaskei_BJE4460_Xb.fq.gz,Mal_Cheplaskei_BJE4462_Xb.fq.gz,Mal_Cheplaskei_BJE4465_Xb.fq.gz,Mal_Cheplaskei_BJE4469_Xb.fq.gz,Mal_Chesuwe_BJE4477_Xb.fq.gz,Mal_Chesuwe_BJE4478_Xb.fq.gz,Mal_Chesuwe_BJE4480_Xb.fq.gz,Mal_Eldoret_BJE4473_Xb.fq.gz,Mal_Kiminini_BJE4430_Xb.fq.gz,Mal_Kiminini_BJE4431_Xb.fq.gz,Mal_Kiminini_BJE4432_Xb.fq.gz,Mal_Kisumu_BJE4391_Xb.fq.gz,Mal_Lukhome_BJE4442_Xb.fq.gz,Mal_Lukhome_BJE4443_Xb.fq.gz,Mal_Lukhome_BJE4447_Xb.fq.gz,Mal_Nakuru_BJE4365_Xb.fq.gz,Mal_Nakuru_BJE4366_Xb.fq.gz,Mal_Nakuru_BJE4374_Xb.fq.gz,Mal_Nakuru_BJE4377_Xb.fq.gz XB_unfiltered_allchrs.vcf.gz | bgzip -c > XB_west_and_Njoro_only_unfiltered_allchrs.vcf.gz
 
 ```
+Or use bcftools (much faster):
+```
+bcftools view -s Fem_Cheplaskei_BJE4459_Xb.fq.gz,Fem_Cheplaskei_BJE4461_Xb.fq.gz,Fem_Cheplaskei_BJE4470_Xb.fq.gz,Fem_Chesuwe_BJE4479_Xb.fq.gz,Fem_Chesuwe_BJE4481_Xb.fq.gz,Fem_Eldoret_BJE4471_Xb.fq.gz,Fem_Eldoret_BJE4472_Xb.fq.gz,Fem_Eldoret_BJE4474_Xb.fq.gz,Fem_Eldoret_BJE4475_Xb.fq.gz,Fem_Eldoret_BJE4476_Xb.fq.gz,Fem_Kiminini_BJE4429_Xb.fq.gz,Fem_Kiminini_BJE4433_Xb.fq.gz,Fem_Lukhome_BJE4441_Xb.fq.gz,Fem_Lukhome_BJE4444_Xb.fq.gz,Fem_Lukhome_BJE4445_Xb.fq.gz,Fem_Lukhome_BJE4446_Xb.fq.gz,Mal_Cheplaskei_BJE4460_Xb.fq.gz,Mal_Cheplaskei_BJE4462_Xb.fq.gz,Mal_Cheplaskei_BJE4465_Xb.fq.gz,Mal_Cheplaskei_BJE4469_Xb.fq.gz,Mal_Chesuwe_BJE4477_Xb.fq.gz,Mal_Chesuwe_BJE4478_Xb.fq.gz,Mal_Chesuwe_BJE4480_Xb.fq.gz,Mal_Eldoret_BJE4473_Xb.fq.gz,Mal_Kiminini_BJE4430_Xb.fq.gz,Mal_Kiminini_BJE4431_Xb.fq.gz,Mal_Kiminini_BJE4432_Xb.fq.gz,Mal_Kisumu_BJE4391_Xb.fq.gz,Mal_Lukhome_BJE4442_Xb.fq.gz,Mal_Lukhome_BJE4443_Xb.fq.gz,Mal_Lukhome_BJE4447_Xb.fq.gz mpileup_raw_wildBorealis_AuXXXnGenome_Chrs_only.vcf.gz -O z > west_only_mpileup_raw_wildBorealis_AuXXXGenome_Chrs_only.vcf.gz
+
+bcftools view -s Fem_NMK_BJE4562_Xb.fq.gz,Fem_NMK_BJE4564_Xb.fq.gz,Fem_NMK_BJE4567_Xb.fq.gz,Fem_NMK_BJE4568_Xb.fq.gz,Fem_Nakuru_BJE4363_Xb.fq.gz,Fem_Nakuru_BJE4364_Xb.fq.gz,Fem_Nakuru_BJE4367_Xb.fq.gz,Fem_Nakuru_BJE4368_Xb.fq.gz,Mal_NMK_BJE4563_Xb.fq.gz,Mal_Nakuru_BJE4365_Xb.fq.gz,Mal_Nakuru_BJE4366_Xb.fq.gz,Mal_Nakuru_BJE4374_Xb.fq.gz,Mal_Nakuru_BJE4377_Xb.fq.gz mpileup_raw_wildBorealis_AuXXXGenome_Chrs_only.vcf.gz -O z > central_only_mpileup_raw_wildBorealis_AuXXXGenome_Chrs_only.vcf.gz
+
+bcftools view -s Fem_Wundanyi_BJE4515_Xb.fq.gz,Fem_Wundanyi_BJE4516_Xb.fq.gz,Fem_Wundanyi_BJE4534_Xb.fq.gz,Fem_Wundanyi_BJE4535_Xb.fq.gz,Fem_Wundanyi_BJE4541_Xb.fq.gz,Mal_Wundanyi_BJE4536_Xb.fq.gz,Mal_Wundanyi_BJE4537_Xb.fq.gz,Mal_Wundanyi_BJE4538_Xb.fq.gz,Mal_Wundanyi_BJE4539_Xb.fq.gz,Mal_Wundanyi_BJE4540_Xb.fq.gz mpileup_raw_wildBorealis_AuXXXGenome_Chrs_only.vcf.gz -O z > east_wund_only_mpileup_raw_wildBorealis_AuXXXGenome_Chrs_only.vcf.gz
+
+bcftools view -s Fem_Nakuru_BJE4363_Xb.fq.gz,Fem_Nakuru_BJE4364_Xb.fq.gz,Fem_Nakuru_BJE4367_Xb.fq.gz,Fem_Nakuru_BJE4368_Xb.fq.gz,Mal_Nakuru_BJE4365_Xb.fq.gz,Mal_Nakuru_BJE4366_Xb.fq.gz,Mal_Nakuru_BJE4374_Xb.fq.gz,Mal_Nakuru_BJE4377_Xb.fq.gz mpileup_raw_wildBorealis_AuXXXGenome_Chrs_only.vcf.gz -O z > Njoror_only_mpileup_raw_wildBorealis_AuXXXGenome_Chrs_only.vcf.gz
+
+bcftools view -s Fem_Cheplaskei_BJE4459_Xb.fq.gz,Fem_Cheplaskei_BJE4461_Xb.fq.gz,Fem_Cheplaskei_BJE4470_Xb.fq.gz,Fem_Chesuwe_BJE4479_Xb.fq.gz,Fem_Chesuwe_BJE4481_Xb.fq.gz,Fem_Eldoret_BJE4471_Xb.fq.gz,Fem_Eldoret_BJE4472_Xb.fq.gz,Fem_Eldoret_BJE4474_Xb.fq.gz,Fem_Eldoret_BJE4475_Xb.fq.gz,Fem_Eldoret_BJE4476_Xb.fq.gz,Fem_Kiminini_BJE4429_Xb.fq.gz,Fem_Kiminini_BJE4433_Xb.fq.gz,Fem_Lukhome_BJE4441_Xb.fq.gz,Fem_Lukhome_BJE4444_Xb.fq.gz,Fem_Lukhome_BJE4445_Xb.fq.gz,Fem_Lukhome_BJE4446_Xb.fq.gz,Fem_Nakuru_BJE4363_Xb.fq.gz,Fem_Nakuru_BJE4364_Xb.fq.gz,Fem_Nakuru_BJE4367_Xb.fq.gz,Fem_Nakuru_BJE4368_Xb.fq.gz,Mal_Cheplaskei_BJE4460_Xb.fq.gz,Mal_Cheplaskei_BJE4462_Xb.fq.gz,Mal_Cheplaskei_BJE4465_Xb.fq.gz,Mal_Cheplaskei_BJE4469_Xb.fq.gz,Mal_Chesuwe_BJE4477_Xb.fq.gz,Mal_Chesuwe_BJE4478_Xb.fq.gz,Mal_Chesuwe_BJE4480_Xb.fq.gz,Mal_Eldoret_BJE4473_Xb.fq.gz,Mal_Kiminini_BJE4430_Xb.fq.gz,Mal_Kiminini_BJE4431_Xb.fq.gz,Mal_Kiminini_BJE4432_Xb.fq.gz,Mal_Kisumu_BJE4391_Xb.fq.gz,Mal_Lukhome_BJE4442_Xb.fq.gz,Mal_Lukhome_BJE4443_Xb.fq.gz,Mal_Lukhome_BJE4447_Xb.fq.gz,Mal_Nakuru_BJE4365_Xb.fq.gz,Mal_Nakuru_BJE4366_Xb.fq.gz,Mal_Nakuru_BJE4374_Xb.fq.gz,Mal_Nakuru_BJE4377_Xb.fq.gz mpileup_raw_wildBorealis_AuXXXnGenome_Chrs_only.vcf.gz -O z > XB_west_and_Njoro_only_mpileup_raw_wildBorealis_AuXXXGenome_Chrs_only.vcf.gz
+
+```
+
 
 # Plink
 ```
