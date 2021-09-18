@@ -45,6 +45,8 @@ vcf-subset -c Fem_Wundanyi_BJE4515_Xb.fq.gz,Fem_Wundanyi_BJE4516_Xb.fq.gz,Fem_Wu
 
 vcf-subset -c Fem_Nakuru_BJE4363_Xb.fq.gz,Fem_Nakuru_BJE4364_Xb.fq.gz,Fem_Nakuru_BJE4367_Xb.fq.gz,Fem_Nakuru_BJE4368_Xb.fq.gz,Mal_Nakuru_BJE4365_Xb.fq.gz,Mal_Nakuru_BJE4366_Xb.fq.gz,Mal_Nakuru_BJE4374_Xb.fq.gz,Mal_Nakuru_BJE4377_Xb.fq.gz XB_unfiltered_allchrs.vcf.gz | bgzip -c > XB_Njoroonly_unfiltered_allchrs.vcf.gz
 
+vcf-subset -c Fem_Cheplaskei_BJE4459_Xb.fq.gz,Fem_Cheplaskei_BJE4461_Xb.fq.gz,Fem_Cheplaskei_BJE4470_Xb.fq.gz,Fem_Chesuwe_BJE4479_Xb.fq.gz,Fem_Chesuwe_BJE4481_Xb.fq.gz,Fem_Eldoret_BJE4471_Xb.fq.gz,Fem_Eldoret_BJE4472_Xb.fq.gz,Fem_Eldoret_BJE4474_Xb.fq.gz,Fem_Eldoret_BJE4475_Xb.fq.gz,Fem_Eldoret_BJE4476_Xb.fq.gz,Fem_Kiminini_BJE4429_Xb.fq.gz,Fem_Kiminini_BJE4433_Xb.fq.gz,Fem_Lukhome_BJE4441_Xb.fq.gz,Fem_Lukhome_BJE4444_Xb.fq.gz,Fem_Lukhome_BJE4445_Xb.fq.gz,Fem_Lukhome_BJE4446_Xb.fq.gz,Fem_Nakuru_BJE4363_Xb.fq.gz,Fem_Nakuru_BJE4364_Xb.fq.gz,Fem_Nakuru_BJE4367_Xb.fq.gz,Fem_Nakuru_BJE4368_Xb.fq.gz,Mal_Cheplaskei_BJE4460_Xb.fq.gz,Mal_Cheplaskei_BJE4462_Xb.fq.gz,Mal_Cheplaskei_BJE4465_Xb.fq.gz,Mal_Cheplaskei_BJE4469_Xb.fq.gz,Mal_Chesuwe_BJE4477_Xb.fq.gz,Mal_Chesuwe_BJE4478_Xb.fq.gz,Mal_Chesuwe_BJE4480_Xb.fq.gz,Mal_Eldoret_BJE4473_Xb.fq.gz,Mal_Kiminini_BJE4430_Xb.fq.gz,Mal_Kiminini_BJE4431_Xb.fq.gz,Mal_Kiminini_BJE4432_Xb.fq.gz,Mal_Kisumu_BJE4391_Xb.fq.gz,Mal_Lukhome_BJE4442_Xb.fq.gz,Mal_Lukhome_BJE4443_Xb.fq.gz,Mal_Lukhome_BJE4447_Xb.fq.gz,Mal_Nakuru_BJE4365_Xb.fq.gz,Mal_Nakuru_BJE4366_Xb.fq.gz,Mal_Nakuru_BJE4374_Xb.fq.gz,Mal_Nakuru_BJE4377_Xb.fq.gz XB_unfiltered_allchrs.vcf.gz | bgzip -c > XB_west_and_Njoro_only_unfiltered_allchrs.vcf.gz
+
 ```
 
 # Plink
@@ -58,4 +60,8 @@ mv plink.assoc XB_westonly_unfiltered_allchrs.vcf.gz_plink.assoc
 plink --vcf XB_Njoroonly_unfiltered_allchrs.vcf.gz --recode --const-fid 0 --chr-set 36 no-y no-xy no-mt --allow-extra-chr --out XB_Njoro_only_unfiltered_allchrs.vcf.gz_myplink
 plink --file XB_Njoro_only_unfiltered_allchrs.vcf.gz_myplink --pheno Njoro_sample_sex --assoc --allow-no-sex --allow-extra-chr 
 mv plink.assoc XB_Njoro_only_unfiltered_allchrs.vcf.gz_plink.assoc
+
+plink --vcf XB_west_and_Njoro_only_unfiltered_allchrs.vcf.gz --recode --const-fid 0 --chr-set 36 no-y no-xy no-mt --allow-extra-chr --out XB_west_and_Njoro_only_unfiltered_allchrs.vcf.gz_myplink
+plink --file XB_west_and_Njoro_only_unfiltered_allchrs.vcf.gz_myplink --pheno west_and_Njoro_sample_sex --assoc --allow-no-sex --allow-extra-chr 
+mv plink.assoc XB_west_and_Njoro_only_unfiltered_allchrs.vcf.gz_plink.assoc
 ```
