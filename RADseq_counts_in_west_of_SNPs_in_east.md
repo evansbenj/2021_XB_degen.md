@@ -4,6 +4,8 @@ Two expectations under the scenario of turnover in XB are that (1) the W chr sho
 
 First make a tab delimited file and subset it to include only the SL region:
 ```
+module load StdEnv/2020 gcc/9.3.0 bcftools/1.11
+bcftools view mpileup_raw_wildBorealis_AustinGenome.vcf.gz --regions Chr8L:1-54000000 -O z -o mpileup_raw_wildBorealis_AustinGenome_Chrs8_SL_only.vcf.gz
 
 ```
 
