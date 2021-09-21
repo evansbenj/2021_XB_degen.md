@@ -86,3 +86,15 @@ plink --vcf XB_west_and_Njoro_only_unfiltered_allchrs.vcf.gz --recode --const-fi
 plink --file XB_west_and_Njoro_only_unfiltered_allchrs.vcf.gz_myplink --pheno west_and_Njoro_sample_sex --assoc --allow-no-sex --allow-extra-chr 
 mv plink.assoc XB_west_and_Njoro_only_unfiltered_allchrs.vcf.gz_plink.assoc
 ```
+
+# Checking for specificity of SL regions
+For most plots (except from the east), there is a fair amount of background signal. This makes it hard to know what actually might be sex-linked.  To try to tease this apart, I am going to extract genomic windows that surround the sex-linked SNPs, and blast these against the genome to identify ones with unique matches.  Then I can reassess what to believe.
+
+First make a bedfile from the plink output that had the SNPs of interest (e.g. with a log(P value) greater than some value such as 10) plus/minus 100 bp.
+
+To pull out genomic intervals, we can use bedtools:
+```
+module load StdEnv/2020 bedtools/2.29.2
+bedtools getfasta [OPTIONS] -fi <input FASTA> -bed <BED/GFF/VCF>
+```
+
