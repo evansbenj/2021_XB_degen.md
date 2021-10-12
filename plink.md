@@ -36,7 +36,7 @@ module load StdEnv/2020 vcftools/0.1.16
 vcf-concat DB_chr1L_out.vcf DB_chr1S_out.vcf DB_chr2L_out.vcf DB_chr2S_out.vcf DB_chr3L_out.vcf DB_chr3S_out.vcf DB_chr4L_out.vcf DB_chr4S_out.vcf DB_chr5L_out.vcf DB_chr5S_out.vcf DB_chr6L_out.vcf DB_chr6S_out.vcf DB_chr7L_out.vcf DB_chr7S_out.vcf DB_chr8L_out.vcf DB_chr8S_out.vcf DB_chr9_10L_out.vcf DB_chr9_10S_out.vcf | gzip -c > XB_unfiltered_allchrs.vcf.gz
 ```
 Or filter to include only chrs for XB_Au
-``
+```
 module load StdEnv/2020  gcc/9.3.0 bcftools/1.11
 
 bcftools view mpileup_raw_wildBorealis_AuXXXGenome.vcf.gz --regions Chr1L,Chr1S,Chr2L,Chr2S,Chr3L,Chr3S,Chr4L,Chr4S,Chr5L,Chr5S,Chr6L,Chr6S,Chr7L,Chr7S,Chr8L,Chr8S,Chr9_10L,Chr9_10S -O z -o mpileup_raw_wildBorealis_AuXXXGenome_Chrs_only.vcf.gz
