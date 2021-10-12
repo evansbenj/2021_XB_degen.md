@@ -40,7 +40,7 @@ Or filter to include only chrs for XB_Au
 module load StdEnv/2020  gcc/9.3.0 bcftools/1.11
 
 bcftools view mpileup_raw_wildBorealis_AuXXXGenome.vcf.gz --regions Chr1L,Chr1S,Chr2L,Chr2S,Chr3L,Chr3S,Chr4L,Chr4S,Chr5L,Chr5S,Chr6L,Chr6S,Chr7L,Chr7S,Chr8L,Chr8S,Chr9_10L,Chr9_10S -O z -o mpileup_raw_wildBorealis_AuXXXGenome_Chrs_only.vcf.gz
-``
+```
 
 Subset populations
 ```
