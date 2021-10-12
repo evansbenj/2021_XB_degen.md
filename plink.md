@@ -102,7 +102,7 @@ bedtools getfasta [OPTIONS] -fi <input FASTA> -bed <BED/GFF/VCF>
 Estimate LD between pairwise comparisons of SNPs:
 ```
 module load nixpkgs/16.09 plink/1.9b_5.2-x86_64
-plink --file XB_west_and_Njoro_only_mpileup_raw_wildBorealis_AustinGenome_Chrs_only.vcf.gz_myplink --noweb --r2 --allow-no-sex --allow-extra-chr
+plink --file XB_west_and_Njoro_only_mpileup_raw_wildBorealis_AustinGenome_Chrs_only.vcf.gz_myplink --noweb --r2 dprime --allow-no-sex --allow-extra-chr
 ```
 
 Get rid of nan lines:
