@@ -98,3 +98,15 @@ module load StdEnv/2020 bedtools/2.29.2
 bedtools getfasta [OPTIONS] -fi <input FASTA> -bed <BED/GFF/VCF>
 ```
 
+# LD
+Estimate LD between pairwise comparisons of SNPs:
+```
+module load nixpkgs/16.09 plink/1.9b_5.2-x86_64
+plink --file XB_west_and_Njoro_only_mpileup_raw_wildBorealis_AustinGenome_Chrs_only.vcf.gz_myplink --noweb --r --allow-no-sex --allow-extra-chr
+```
+
+Get rid of nan lines:
+```
+cat Njoro_only_mpileup_raw_wildBorealis_AustinGenome_Chrs_only.vcf.gz_myplink.ld | grep -v 'nan' > Njoro_only_mpileup_raw_wildBorealis_AustinGenome_Chrs_only.vcf.gz_myplink.ld_no_nan
+```
+
