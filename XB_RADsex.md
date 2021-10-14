@@ -355,6 +355,10 @@ Blasts of Scaffold20 to XT suggest it is on chr3. Scaffold28 is probably on chr5
 ```
 blastn -query westkenya_markers_table.tsv_6ormore_Males_0_Females.fasta -db ../../2021_Austin_XB_genome/Austin_genome/Xbo.v1.fa_blastable -outfmt 6 -out ./westkenya_markers_table.tsv_6ormore_Males_0_Females.fasta_to_XB
 ```
+Get only columns of interest
+```
+cut -f1,2,9 westkenya_markers_table.tsv_7ormore_Males_0_Females.fasta_to_XB  > westkenya_markers_table.tsv_7ormore_Males_0_Females_hits_to_XB_chr_start
+```
 Discard mappings to scaffolds
 ```
 grep 'Chr' westkenya_markers_table.tsv_6ormore_Males_0_Females_hits_to_XB_chr_start > temp
