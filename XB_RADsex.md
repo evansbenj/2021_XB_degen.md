@@ -348,3 +348,55 @@ Chr7L may be the sex-linked one...although chr8L has several make-specific tags 
 1618524	Scaffold73	370389
 ```
 Blasts of Scaffold20 to XT suggest it is on chr3. Scaffold28 is probably on chr5. Scaffold31 is ~50Mb in XT on chr3. Scaffold40682 is on chr8 !25Mb in XT. Scaffold49 is on chr5 ~70Mb in XT. Scaffold73 is on chr1 around 215Mb in XT.
+
+# Repeating male-specific tads with Austin's genome
+
+# blast the tads against Austin's genome
+```
+blastn -query westkenya_markers_table.tsv_6ormore_Males_0_Females.fasta -db ../../2021_Austin_XB_genome/Austin_genome/Xbo.v1.fa_blastable -outfmt 6 -out ./westkenya_markers_table.tsv_6ormore_Males_0_Females.fasta_to_XB
+```
+Discard mappings to scaffolds
+```
+grep 'Chr' westkenya_markers_table.tsv_6ormore_Males_0_Females_hits_to_XB_chr_start > temp
+```
+Tabulate occurances of first column, which is a RADtag ID
+```
+cat temp | sort | uniq -c -w7 | sort > tempppp.txt
+```
+I manually edited tempppp.txt to delete all rows with a first column that was not 1.  Then I plotted this:
+```R
+setwd('/Users/Shared/Previously\ Relocated\ Items/Security/projects/2021_Xborealis_sexchr_degen/RADsex_XB_west')
+library (ggplot2)
+
+dat<-read.table("./westkenya_markers_table.tsv_6ormore_Males_0_Females_hits_to_XB_chr_start_chronly_unique_mapping_only",header=F)
+# add some headers
+names(dat) <- c("one","tag","chr","pos")
+# make a column with a random value for plotting
+dat$meaningless <- 1
+# make a column to color values with low pvalues
+dat$color <- "red"
+
+
+pdf("./West_only_male_specific_AustinGenome.pdf",w=8, h=12.0, version="1.4", bg="transparent")
+p<-ggplot(dat, aes(x=pos, y=meaningless, color=color)) + 
+    # add points
+    geom_point(size=2, alpha = 0.7 ) +
+    # add loess line
+    # geom_smooth() +
+    # label axes
+    #labs(x = "XB_W_N_x_dN", y="XB_Z_N_x_dN") +
+    # color the stuff the way I want
+    scale_colour_manual(name="Genomic region", 
+                      values = c("red"="red"),
+                      breaks=c("red"),
+                      labels=c("male-specific")) +
+    facet_wrap(~chr, ncol = 2) +
+    # get rid of gray background
+    theme_bw() + 
+    theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank()) +
+    geom_vline(data = data.frame(xint=140459220,chr="Chr1L"), aes(xintercept = xint), linetype = "dotted")+
+    geom_vline(data = data.frame(xint=115397353,chr="Chr1S"), aes(xintercept = xint), linetype = "dotted")+
+    geom_vline(data = data.frame(xint=141036519,chr="Chr4L"), aes(xintercept = xint), linetype = "dotted")
+p
+dev.off()
+```
