@@ -25,6 +25,13 @@ Use bcftools to make a consensus file from mapped reads:
 module load StdEnv/2020 gcc/9.3.0 bcftools/1.11
 module load StdEnv/2020  gcc/9.3.0 samtools/1.13
 
-samtools faidx /home/ben/projects/rrg-ben/ben/2020_XL_v9.2_refgenome/XENLA_9.2_genome.fa ${2} | bcftools consensus -I -s SRR635
+samtools faidx /home/ben/projects/rrg-ben/ben/2020_XL_v9.2_refgenome/XENLA_9.2_genome.fa ${2} | bcftools consensus -H A -s SRR635
 7673_trim._sorted.bam ${1} > ${1}_XLmapping_consensus.fa
 ```
+I had to use the '-H A' flag because I had issues with the '-I' flag for chr1L only for some reason.
+
+After concatenating the files, I had to replace asterisks with an 'N':
+```
+sed -i 's/\*/N/g' ../Artifical_XB_genome/artificial_reference/SRR6357673_artificial_XBgenome_basedonmappingtoXL.fa
+```
+because haplotype caller didn't like ascii char 42 in the ref. 
