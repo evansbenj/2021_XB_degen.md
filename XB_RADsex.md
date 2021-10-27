@@ -1,3 +1,10 @@
+# RADseq data
+
+Are here:
+```
+/home/ben/projects/rrg-ben/ben/2020_radsex/bin/allsamples
+```
+
 # XB RADsex
 
 Previous analyses were done by population on graham here:
