@@ -1,3 +1,8 @@
+# Leverage XB genome and XL annotations
+
+One idea is to map the XB data to the XB genome, extract reads from chr8L, and then map these to XL chr8L. This might improve mapping and reduce the amount of cross-paralog mapping. Then the pipeline below could be followed for the female (WZ) and male (ZZ) genomes, most likely using this tree (XL,XB_W,XB_Z) after inferring XB_W and XB_Z by comparing SNPs.
+
+
 # WGS dNdS
 
 I mapped the WGS data from a female and a male to the XL v9.2 assembly.
