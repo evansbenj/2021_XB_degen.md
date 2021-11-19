@@ -3,9 +3,8 @@
 Associations between SNPs and a phenotype (such as phenotypic sex) are easily calculated using plink.
 
 ```
-module load plink/1.9b_5.2-x86_64
-module load StdEnv/2020
-module load r/4.0.2
+module load nixpkgs/16.09 plink/1.9b_5.2-x86_64
+
 plink --vcf temp.vcf.gz --recode --const-fid 0 --chr-set 36 no-y no-xy no-mt --out myplink
 plink --file myplink --pheno sex_phenotype --assoc --allow-no-sex
 ```
