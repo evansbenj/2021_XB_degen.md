@@ -152,37 +152,9 @@ to_file <- data.frame(sub$CHROM, sub$POS)
 # write to file
 write.table(to_file, "Chr8L_positions_to_exclude.txt", append = FALSE, sep = "\t", dec = ".",
             row.names = F, col.names = F)
+```
 
-
-
-
-# make a plot for each chr
-#for(c in chrs) {
-for(c in "chr02a") {  
-
-  # Open a png file
-  png(paste("nigra_PF1001_depth_per_site_chrX.png",sep=""),w=8, h=4.0, bg="transparent")
-  p<-ggplot(mv_ave_df3, aes(x=POS, y=tonk_PF511.DP)) + 
-    #geom_point(size=0.5) +
-    geom_line(aes(colour = "red"), linetype = 1) +
-    #scale_y_discrete(name="Coverage / base pair", limits(1,500)) +
-    # log transform y-axis
-    #scale_y_log10(name="Coverage / base pair", limits=c(1, 500)) +
-    # get rid of gray background
-    geom_hline(yintercept = (mean(my_data$tonk_PF511.DP, na.rm = T)+3*(sd(my_data$tonk_PF511.DP, na.rm = T))))+
-    theme_bw() +
-    # Get rid of the legend
-    theme(legend.position = "none")
-  
-  p + facet_wrap( ~ species_f, nrow=2) + 
-    labs(title="Coverage per base of de novo assemblies", 
-         subtitle="WGS data (29 samples)") +
-    # italicize the labels of each facet
-    theme(strip.text = element_text(face = "italic"))
-  # Close the pdf file
-  dev.off()
-  
-  # get positions that have really high coverage
-  duplicated_regions <-subset(subset2, moving_average > 100)
-}
+Remove quotes
+```
+sed -i 's/"//g' Chr8L_positions_to_exclude.txt
 ```
