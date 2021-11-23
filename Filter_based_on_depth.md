@@ -24,7 +24,7 @@ gatk --java-options -Xmx8G VariantsToTable -V ${1} -F CHROM -F POS -GF DP -O ${1
 ```
 Load R
 ```
-module load StdEnv/2020 r/4.1.2
+module load StdEnv/2020 java/13.0.2 r/4.1.2
 ```
 Need to change file names twice in this script
 ```
