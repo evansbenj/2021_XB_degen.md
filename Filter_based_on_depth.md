@@ -395,7 +395,7 @@ print @individuals,"\n";
 # Print results to stout
 print "Individual\tn_homoz_female_specific\tn_homoz_sex_shared\tn_het\n";
 print "West_female\t", $West_female_female_specific_homoz,"\t", $West_female_sex_shared_specific_homoz,"\t", $West_female_heteroz,"\n";
-print "West_female\t", $West_male_female_specific_homoz,"\t", $West_male_sex_shared_specific_homoz,"\t", $West_male_heteroz,"\n";
+print "West_male\t", $West_male_female_specific_homoz,"\t", $West_male_sex_shared_specific_homoz,"\t", $West_male_heteroz,"\n";
 # Print results to an output file
 print OUTFILE "Individual\tn_homoz_female_specific\tn_homoz_sex_shared\tn_het\n";
 print OUTFILE "West_female\t", $West_female_female_specific_homoz,"\t", $West_female_sex_shared_specific_homoz,"\t", $West_female_heteroz,"\n";
