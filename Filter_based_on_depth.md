@@ -163,3 +163,9 @@ Now remove these sites
 module load nixpkgs/16.09 intel/2018.3 vcftools/0.1.16
 vcftools --gzvcf allsites_Chr8L_SNPs.vcf.gz_filtered.vcf.gz_filtered_removed.vcf.gz --out allsites_Chr8L_SNPs.vcf.gz_filtered.vcf.gz_filtered_removed.vcf.gz.recode.vcf.gz --exclude-positions Chr8L_positions_to_exclude.txt --recode
 ```
+
+make a tab file
+```
+module load nixpkgs/16.09  intel/2018.3 vcftools/0.1.16
+vcf-to-tab < in.vcf > out.tab
+```
