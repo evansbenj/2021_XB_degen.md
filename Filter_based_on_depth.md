@@ -29,7 +29,7 @@ module load StdEnv/2020 r/4.1.2
 Need to change file names twice in this script
 ```
 library (ggplot2)
-setwd("/Users/Shared/Previously\ Relocated\ Items/Security/projects/2021_Xborealis_sexchr_degen/WGS_depth_filter")
+setwd("./")
 # get all the files with the site data
 files <- list.files(path = ".", pattern = "allsites_Chr8L_SNPs.vcf.gz_filtered.vcf.gz_filtered_removed.vcf.gz.table")
 
