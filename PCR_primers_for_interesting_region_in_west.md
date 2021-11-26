@@ -12,5 +12,12 @@ Working on graham in this directory:
 Get fasta seq:
 ```
 module load StdEnv/2020 bedtools/2.30.0
-bedtools getfasta -fi XENLA_10.1_genome.fa -bed CDS_in_Chr8L_XXXX_Mb.bed -fo XL_v10_Chr8L_XXX_Mb.fasta
+bedtools getfasta -fi XENLA_10.1_genome.fa -bed CDS_in_Chr8L_XXXX_Mb.bed -fo XL_v10_Chr8L_XXX_Mb_CDSonly.fasta
+```
+
+Now blast them against Austin genome:
+```
+module load StdEnv/2020  gcc/9.3.0 blast+/2.11.0
+blastn -query XL_v10_Chr8L_XXX_Mb_CDSonly.fasta -db Xbo.v1.fa_blastable -outfmt 6 -out ./XL_v10_Chr8L_XXX_Mb_CDSonly.fasta_to_Austin_genome 
+
 ```
