@@ -51,7 +51,7 @@ python /home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian_macaques_bam
 ```
 Calculate pairwise distances
 ```
-./2021_general_genomics_popgen_6pops.sh ../WGS_vcfs_by_chr/combined_andfiltereds_gvcfs/allsites_Chr8L_SNPs.vcf.gz_filtered.vcf.gz_filtered_removed.vcf.gz_phased.vcf.gz.vcf.gz.geno.gz East_female East_male West_female West_male
+./2021_general_genomics_popgen_6pops.sh ../WGS_vcfs_by_chr/combined_andfiltereds_gvcfs/allsites_Chr8L_SNPs.vcf.gz_filtered.vcf.gz_filtered_removed.vcf.gz_phased.vcf.gz.vcf.gz.geno.gz East_female East_male West_female West_male Lab_female Lab_male
 ```
 
 I also did this for chr7S.
