@@ -1,6 +1,10 @@
 # Counting sex-limited and sex-shared SNPs in WGS data from west
 
 ```
+/home/ben/projects/rrg-ben/ben/2021_Austin_XB_genome/WGS_vcfs_by_chr/combined_andfiltereds_gvcfs
+```
+
+```
 #!/usr/bin/env perl
 use strict;
 use warnings;
