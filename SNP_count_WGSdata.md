@@ -130,8 +130,26 @@ my $West_female_heteroz=0;
 my $West_male_female_specific_homoz=0;
 my $West_male_sex_shared_specific_homoz=0;
 my $West_male_heteroz=0;
-my $West_female_heteroz_and_West_male_sex_shared_specific_homoz=0;
-my $West_male_heteroz_and_West_female_sex_shared_specific_homoz=0;
+# 9 possible combinations: 
+# Wfem het, Wmale het
+my $Wfem_het_Wmale_het=0;
+# Wfem het, Wmale hom sexshared
+my $Wfem_het_Wmale_hom_sexshared=0;
+# Wfem het, Wmale hom femalespecific
+my $Wfem_het_Wmale_hom_femalespecific=0;
+# Wfem hom sexshared, Wmale het
+my $Wfem_hom_sexshared_Wmale_het=0;
+# Wfemale hom femalespecific, Wmale het
+my $Wfemale_hom_femalespecific_Wmale_het=0;
+# Wfem homoz femalespecific, Wmale homoz femalespecific
+my $Wfem_homoz_femalespecific_Wmale_homoz_femalespecific=0;
+# Wfem homoz sexshared, Wmale homoz sexshared
+my $Wfem_homoz_sexshared_Wmale_homoz_sexshared=0;
+# Wfem homoz femalespecific, Wmale homoz sexshared
+my $Wfem_homoz_femalespecific_Wmale_homoz_sexshared=0;
+# Wfem homoz sexshared, Wmale homoz femalespecific
+my $Wfem_homoz_sexshared_Wmale_homoz_femalespecific=0;
+
 
 while ( my $line = <DATAINPUT>) {
 	chomp($line);
@@ -241,12 +259,59 @@ while ( my $line = <DATAINPUT>) {
 						else{
 							print "Problem with assigning genotypes to West_male\n";
 						}
-						# Now count the number of sites where the west female is heteroz and the west male is homoz for the sex-shared SNP
+						# Now count the number of sites with each of the 9 possible pairwise combinations of genotypes in the two west individuals
+						
+						# Wfem het, Wmale hom sexshared
 						if(($West_female_allele_1 ne $West_female_allele_2)&&(($West_male_allele_1 eq $sex_shared_SNP)&&($West_male_allele_2 eq $sex_shared_SNP))){
-							$West_female_heteroz_and_West_male_sex_shared_specific_homoz+=1;
+							$Wfem_het_Wmale_hom_sexshared+=1;
 						}
+						# Wfem hom sexshared, Wmale het
 						elsif(($West_male_allele_1 ne $West_male_allele_2)&&(($West_female_allele_1 eq $sex_shared_SNP)&&($West_female_allele_2 eq $sex_shared_SNP))){
-							$West_male_heteroz_and_West_female_sex_shared_specific_homoz+=1;
+							$Wfem_hom_sexshared_Wmale_het+=1;
+						}
+						# Wfem het, Wmale het
+						elsif(($West_male_allele_1 ne $West_male_allele_2)&&($West_female_allele_1 ne $West_female_allele_2)){
+							$Wfem_het_Wmale_het+=1;
+						}
+						# Wfemale hom femalespecific, Wmale het
+						elsif(($West_male_allele_1 ne $West_male_allele_2)&&(($West_female_allele_1 eq $female_specific_SNP)&&($West_female_allele_2 eq $female_specific_SNP))){
+							$Wfemale_hom_femalespecific_Wmale_het+=1;
+						}
+						# Wfem het, Wmale hom femalespecific
+						elsif(($West_female_allele_1 ne $West_female_allele_2)&&(($West_male_allele_1 eq $female_specific_SNP)&&($West_male_allele_2 eq $female_specific_SNP))){
+							$Wfem_het_Wmale_hom_femalespecific+=1;
+						}
+						# Wfem homoz femalespecific, Wmale homoz femalespecific
+						elsif(
+							($West_female_allele_1 eq $female_specific_SNP) && 							($West_female_allele_2 eq $female_specific_SNP)&&
+							($West_male_allele_1 eq $female_specific_SNP)&&
+							($West_male_allele_2 eq $female_specific_SNP)
+							){
+							$Wfem_homoz_femalespecific_Wmale_homoz_femalespecific+=1;
+						}
+						# Wfem homoz sexshared, Wmale homoz sexshared
+						elsif(
+							($West_female_allele_1 eq $sex_shared_SNP) && 							($West_female_allele_2 eq $sex_shared_SNP)&&
+							($West_male_allele_1 eq $sex_shared_SNP)&&
+							($West_male_allele_2 eq $sex_shared_SNP)
+							){
+							$Wfem_homoz_sexshared_Wmale_homoz_sexshared+=1;
+						}
+						# Wfem homoz femalespecific, Wmale homoz sexshared
+						elsif(
+							($West_female_allele_1 eq $female_specific_SNP) && 							($West_female_allele_2 eq $female_specific_SNP)&&
+							($West_male_allele_1 eq $sex_shared_SNP)&&
+							($West_male_allele_2 eq $sex_shared_SNP)
+							){
+							$Wfem_homoz_femalespecific_Wmale_homoz_sexshared+=1;
+						}
+						# Wfem homoz sexshared, Wmale homoz femalespecific
+						elsif(
+							($West_female_allele_1 eq $female_specific_SNP) && 							($West_female_allele_2 eq $female_specific_SNP)&&
+							($West_male_allele_1 eq $female_specific_SNP)&&
+							($West_male_allele_2 eq $female_specific_SNP)
+							){
+							$Wfem_homoz_sexshared_Wmale_homoz_femalespecific+=1;
 						}
 					} # end of check for het and homoz East and Lab
 				} # end of check for nucleotides
@@ -258,8 +323,9 @@ while ( my $line = <DATAINPUT>) {
 #print @individuals,"\n";
 
 # Print results to an output file
-print $lower," ",$upper,"\n"; #"Lower\tUpper\tIndividual\tn_homoz_female_specific\tn_homoz_sex_shared\tn_het\tIndividual\tn_homoz_female_specific\tn_homoz_sex_shared\tn_het\tConserved\tWest_female_heteroz_and_West_male_sex_shared_specific_homoz\tControl\tWest_male_heteroz_and_West_female_sex_shared_specific_homoz\n";
+print $lower," ",$upper,"\n"; #"Lower\tUpper\tIndividual\tn_homoz_female_specific\tn_homoz_sex_shared\tn_het\tIndividual\tn_homoz_female_specific\tn_homoz_sex_shared\tn_het\tWfem_het_Wmale_het\tWfem_het_Wmale_hom_sexshared\tWfem_het_Wmale_hom_femalespecific\tWfem_hom_sexshared_Wmale_het\tWfemale_hom_femalespecific_Wmale_het\tWfem_homoz_femalespecific_Wmale_homoz_femalespecific\tWfem_homoz_sexshared_Wmale_homoz_sexshared\tWfem_homoz_femalespecific_Wmale_homoz_sexshared\tWfem_homoz_sexshared_Wmale_homoz_femalespecific\n";
 print OUTFILE $lower,"\t",$upper,"\tWest_female\t", $West_female_female_specific_homoz,"\t", $West_female_sex_shared_specific_homoz,"\t", $West_female_heteroz,"\t";
-print OUTFILE "West_male\t", $West_male_female_specific_homoz,"\t", $West_male_sex_shared_specific_homoz,"\t", $West_male_heteroz,"\tConserved\t",$West_female_heteroz_and_West_male_sex_shared_specific_homoz,"\tControl\t",$West_male_heteroz_and_West_female_sex_shared_specific_homoz,"\n";
+print OUTFILE "West_male\t", $West_male_female_specific_homoz,"\t", $West_male_sex_shared_specific_homoz,"\t", $West_male_heteroz,"\t",$Wfem_het_Wmale_het,"\t",$Wfem_het_Wmale_hom_sexshared,"\t",$Wfem_het_Wmale_hom_femalespecific,"\t",$Wfem_hom_sexshared_Wmale_het,"\t",$Wfemale_hom_femalespecific_Wmale_het,"\t",$Wfem_homoz_femalespecific_Wmale_homoz_femalespecific,"\t",$Wfem_homoz_sexshared_Wmale_homoz_sexshared,"\t",$Wfem_homoz_femalespecific_Wmale_homoz_sexshared,"\t",$Wfem_homoz_sexshared_Wmale_homoz_femalespecific,"\n";
 close OUTFILE;
+
 ```
