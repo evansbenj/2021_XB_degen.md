@@ -27,7 +27,7 @@ This causes the population to split into 3 groups - the east W, the east Z and t
 But this still produces too many double hets.  I think this can be solved by introducing population structure where east and west diverge for a period of time before speciation of the sex chromosomes.
 
 ```
-./msdir/ms 12 100000 -t 1 -I 3 2 6 4 -n 1 0.125 -n 2 0.375 -n 3 0.500 -ej .09 1 2 -ej .15 2 3 > out
+./msdir/ms 12 100000 -t 1 -I 3 2 6 4 -n 1 0.125 -n 2 0.375 -n 3 0.500 -ej .05 1 2 -ej .11 2 3 > out
 ```
 
 
