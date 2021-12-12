@@ -20,7 +20,7 @@ This could be done also with a range of divergence times (the first parameter cu
 
 # Playing with one simulation:
 ```
-./ms 12 1 -t 100 -I 3 2 6 4 -n 1 0.125 -n 2 0.375 -n 3 0.500 -ej 0.5 1 3 -ej 0.5 2 3
+./ms 12 1 -t 100 -I 3 2 6 4 -n 1 0.125 -n 2 0.375 -n 3 0.500 -ej 0.75 1 3 -ej 0.75 2 3
 ```
 
-I increased theta to be 100 to generate MORE of polymorphism on 1 chr.  This could be increased to a large number - each site has an independent coalesent history anyhow so this may be similar to doing independent simulations and sampling only 1 variant.  Need to look into this.
+I increased theta to be 100 to generate more polymorphism.  These settings produce a similar ratio of two homoz W vs 2 homoz Z in the west as was observed in the recombining region. More tweaking should be able to recapitulate patterns in the nonrecombining region (~1:4)
