@@ -14,4 +14,6 @@ This generates 100 simulations with:
 * -n 1 0.125 -n 2 0.375 -n 2 0.500: pop1 to be 1/8th of N_ancestral (W-chr), pop2 to be 3/8ths of N_ancestral (Z-chr) and pop3 to be 50% of N_ancestral (west pop)
 * -ej 0.1 2 3 -ej 0.1 2 3: pop1 and pop2 coalesce with pop3 at time 0.1
 
-From this I can sample that are heteroz in artificial genotypes from 1 chr from pop1 (Wchr) and 1 chr from pop2 (Zchr) (2 females) and homozy in artifical genotypes from 1 chr from pop1 (Wchr) and 1 chr from pop2 (Zchr) (2 males) and then calculate genotype frequencies in pop3. 
+From this I can sample that are heteroz in artificial genotypes from 1 chr from pop1 (Wchr) and 1 chr from pop2 (Zchr) (2 females) and homozy in artifical genotypes from 1 chr from pop1 (Wchr) and 1 chr from pop2 (Zchr) (2 males) and then calculate genotype frequencies of these sites in pop3. 
+
+This could be done also with a range of divergence times (the first parameter currently set to 01 in the `-ej` command)
