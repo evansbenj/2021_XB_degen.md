@@ -22,7 +22,7 @@ This could be done also with a range of divergence times (the first parameter cu
 ## Simulating the onset of recombination suppression from a panmictic ancestor in the east (applies to noon-recombining portion of Chr8L) 
 This causes the population to split into 3 groups - the east W, the east Z and the west, with the relative proportions of Ne being 0.125, 0.375, and 0.5.
 ```
-./msdir/ms 12 1000000 -t 1 -I 3 2 6 4 -n 1 0.125 -n 2 0.375 -n 3 0.500 -ej .117 1 3 -ej .117 2 3 > out
+./msdir/ms 12 100000 -t 1 -I 3 2 6 4 -n 1 0.125 -n 2 0.375 -n 3 0.500 -ej .09 1 3 -ej .09 2 3 > out
 ```
 ## Simulating panmixia (applies to the recombining portion of Chr8L)
 ```
