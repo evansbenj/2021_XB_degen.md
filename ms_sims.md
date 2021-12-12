@@ -18,9 +18,97 @@ From this I can sample that are heteroz in artificial genotypes from 1 chr from 
 
 This could be done also with a range of divergence times (the first parameter currently set to 01 in the `-ej` command)
 
-# Playing with one simulation:
+# This simulation results in a similar ratio of double_homozZ: double_homozW in the two west
 ```
-./ms 12 1 -t 100 -I 3 2 6 4 -n 1 0.125 -n 2 0.375 -n 3 0.500 -ej 0.75 1 3 -ej 0.75 2 3
+./msdir/ms 12 1000000 -t 1 -I 3 2 6 4 -n 1 0.125 -n 2 0.375 -n 3 0.500 -ej .117 1 3 -ej .117 2 3 > out
 ```
 
-I increased theta to be 100 to generate more polymorphism.  These settings produce a similar ratio of two homoz W vs 2 homoz Z in the west as was observed in the recombining region. More tweaking should be able to recapitulate patterns in the nonrecombining region (~1:4)
+Here is a perl script to parse the ms sims:
+```
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use List::MoreUtils qw/ uniq /;
+use List::Util qw( min max );
+
+
+#  This program reads in the output from ms sims.
+
+# It will take the first variable position from each simulation,
+# construct genotypes, and check the number of double homoz W-specific
+# double homoz Z-specific, and double hets in the east.
+
+# the first two samples are the east W.  The next 6 are the east Z
+# the last 4 are the two diploid from the west.
+
+# here is an example commandline:
+# ./ms 12 10 -t 10 -I 3 2 6 4 -n 1 0.125 -n 2 0.375 -n 3 0.500 -ej .42 1 3 -ej .42 2 3 > out 
+
+my $inputfile = $ARGV[0];
+my $outputfile = $ARGV[1];
+
+
+unless (open DATAINPUT, $inputfile) {
+	print "Can not find the input file 1.\n";
+	exit;
+}
+
+
+unless (open(OUTFILE, ">>$outputfile"))  {
+	print "I can\'t write to $outputfile\n";
+	exit;
+}
+#print "Creating output file: $outputfile\n";
+
+my $pattern="";
+my @temp;
+
+# in order to be accepted, the pattern must begin either with this:
+# 11000000
+# or this:
+# 00111111
+# because this means the two east females are hets and the two east males are homoz
+# the first east female is allele 1+3, the second east female is allele 2+4
+# the first east male is allele 5+6 and the second east male is allele 7+8 
+# the last simulation will be ignored
+
+my $double_homoz_Wspecific=0;
+my $double_homoz_Zspecific=0;
+my $double_hets=0;
+my $firstline=0;
+
+while ( my $line = <DATAINPUT>) {
+	chomp($line);
+	if($firstline==0){
+		print OUTFILE $line,"\n";
+		$firstline=1;
+	}
+	@temp=split(//,$line);
+	if(defined($temp[0])){
+		if(($temp[0] eq 0)||($temp[0] eq 1)){
+			$pattern = $pattern.$temp[0];
+		}
+		elsif($temp[0] eq '/'){ # check if the pattern is ok, and if so characterize it
+			if(($pattern =~ /^11000000/)||($pattern =~ /^00111111/)){
+				#print $pattern,"\n";
+				# count double homoz for W-specific
+				if(($pattern eq '110000001111')||($pattern eq '001111110000')){
+					$double_homoz_Wspecific+=1;
+				}
+				elsif(($pattern eq '110000000000')||($pattern eq '001111111111')){
+					$double_homoz_Zspecific+=1;
+				}
+				elsif(($pattern eq '110000001010')||($pattern eq '110000000101')||
+				($pattern eq '110000001001')||($pattern eq '110000000110')||
+				($pattern eq '001111111010')||($pattern eq '001111110101')||
+				($pattern eq '001111111001')||($pattern eq '001111110110')){
+					$double_hets+=1;
+				}
+			}
+			$pattern="";	
+		}	
+	}
+} # end while
+print "Zdoublehomoz/Wdoublehomoz: ",$double_homoz_Zspecific/$double_homoz_Wspecific,"\n";
+print OUTFILE $double_homoz_Wspecific,"\t",$double_homoz_Zspecific,"\t",$double_hets,"\n";
+```
