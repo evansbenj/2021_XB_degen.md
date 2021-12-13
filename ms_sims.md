@@ -29,7 +29,10 @@ But this still produces too many double hets.  I think this can be solved by int
 ```
 ./msdir/ms 12 100000 -t 1 -I 3 2 6 4 -n 1 0.125 -n 2 0.375 -n 3 0.500 -ej .05 1 2 -ej .11 2 3 > out
 ```
-
+this one works well"
+```
+./msdir/ms 12 100000 -t 1 -I 3 2 6 4 -n 1 0.125 -n 2 0.375 -n 3 0.500 -ej .03 1 2 -ej .3 2 3 > out
+```
 
 ## Simulating panmixia (applies to the recombining portion of Chr8L)
 ```
