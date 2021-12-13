@@ -34,7 +34,7 @@ These two work pretty well
 
 ## Simulating panmixia (applies to the recombining portion of Chr8L)
 ```
-./msdir/ms 12 100000 -t 1 -I 3 2 6 4 -n 1 0.5 -n 2 0.500 -ej .2 1 2 > out
+./msdir/ms 12 100000 -t 1 -I 2 8 4 -n 1 0.5 -n 2 0.500 -ej .2 1 2 > out
 ```
 Here is a perl script to parse the ms sims:
 ```
@@ -55,7 +55,7 @@ use List::Util qw( min max );
 # the last 4 are the two diploid from the west.
 
 # here is an example commandline:
-# ./ms 12 10 -t 10 -I 3 2 6 4 -n 1 0.125 -n 2 0.375 -n 3 0.500 -ej .42 1 3 -ej .42 2 3 > out 
+# ./ms 12 10 -t 10 -I 2 2 6 4 -n 1 0.125 -n 2 0.375 -n 3 0.500 -ej .42 1 3 -ej .42 2 3 > out 
 
 my $inputfile = $ARGV[0];
 my $outputfile = $ARGV[1];
