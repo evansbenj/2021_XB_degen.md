@@ -187,7 +187,7 @@ ggplot(newdat, aes(x=Individual, y=Depth, fill=SL_or_not)) +
   scale_y_continuous(name="Depth (Chr7S)")
 dev.off()
 ```
-
+Depth by site
 ```R
 library (ggplot2)
 library(reshape2) # this facilitates the overlay plot
@@ -244,17 +244,17 @@ colnames(overlay_plot_Data)[3] <- "individual"
 colnames(overlay_plot_Data)[4] <- "Depth"
 # Make a new column with nicer individual names
 overlay_plot_Data$Individual[(overlay_plot_Data$individual == 
-                                "BJE4441_female_west_merge_sorted_dedup.bam.DP")] <- "west female" 
+                                "BJE4441_female_west_merge_sorted_dedup.bam.DP")] <- "West female" 
 overlay_plot_Data$Individual[(overlay_plot_Data$individual == 
-                                "BJE4442_male_west_merge_sorted_dedup.bam.DP")] <- "west male" 
+                                "BJE4442_male_west_merge_sorted_dedup.bam.DP")] <- "West male" 
 overlay_plot_Data$Individual[(overlay_plot_Data$individual == 
-                                "BJE4515_female_east_merge_sorted_dedup.bam.DP")] <- "east female" 
+                                "BJE4515_female_east_merge_sorted_dedup.bam.DP")] <- "East female" 
 overlay_plot_Data$Individual[(overlay_plot_Data$individual == 
-                                "BJE4536_male_east_merge_sorted_dedup.bam.DP")] <- "east male" 
+                                "BJE4536_male_east_merge_sorted_dedup.bam.DP")] <- "East male" 
 overlay_plot_Data$Individual[(overlay_plot_Data$individual == 
-                                "SRR6357672.1_trim_fixed_merged_dedup.bam.DP")] <- "lab male" 
+                                "SRR6357672.1_trim_fixed_merged_dedup.bam.DP")] <- "Lab male" 
 overlay_plot_Data$Individual[(overlay_plot_Data$individual == 
-                                "SRR6357673_trim_sorted_dedup.bam.DP")] <- "lab female" 
+                                "SRR6357673_trim_sorted_dedup.bam.DP")] <- "Lab female" 
 
 # data are now read for overlay plotting
 dim(overlay_plot_Data)
