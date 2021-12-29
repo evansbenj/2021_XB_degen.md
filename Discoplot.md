@@ -2,11 +2,17 @@
 
 I used git locally to install Discoplot from git. On graham, I then installed dependencies like this:
 ```
-pip instal -r requirements.txt
+pip install -r requirements.txt
 ```
-I changed to executable:
+The above did not work. But this maybe will:
 ```
-
+module load python/2.7
+virtualenv /home/$USER/my_venv
+source /home/$USER/my_venv/bin/activate
+pip install numpy
+pip install matplotlib
+pip install pysam
+./DiscoPlot.py -bam ../DiscoPlot.py -bam ../BJE4536_male_east_merge_sorted_dedup.bam_rg_Chr7S.bam -bin 10000 -dpi 200 -o temp_Chr7S_10000_disco.png
 ```
 And tried this command:
 ```
