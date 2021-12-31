@@ -6,7 +6,8 @@ path to XM sample:
 ```
 path to XV sample
 ```
-
+/home/ben/projects/rrg-ben/ben/2019_RADseq_KenyaXBXL_GhanaEastfamily/plate1/samples/BJE4424_Xv.fq.gz 
+/home/ben/projects/rrg-ben/ben/2019_RADseq_KenyaXBXL_GhanaEastfamily/plate1/samples/BJE4407_Xv.fq.gz
 ```
 
 Align
