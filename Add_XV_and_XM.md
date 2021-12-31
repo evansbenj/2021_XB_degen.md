@@ -29,9 +29,9 @@ Align
 module load bwa/0.7.17
 module load samtools/1.10
 
-echo ${file::-6}
-echo bwa mem ${1} ${file::-6}.fq.gz -t 16 | samtools view -Shu - | samtools sort - -o ${file::-6}_sorted.bam
-bwa mem ${1} ${file::-6}.fq.gz -t 16 | samtools view -Shu - | samtools sort - -o ${file::-6}_sorted.bam
-samtools index ${file::-6}_sorted.bam
+echo ${2::-6}
+echo bwa mem ${1} ${2::-6}.fq.gz -t 16 | samtools view -Shu - | samtools sort - -o ${2::-6}_sorted.bam
+bwa mem ${1} ${2::-6}.fq.gz -t 16 | samtools view -Shu - | samtools sort - -o ${2::-6}_sorted.bam
+samtools index ${2::-6}_sorted.bam
 ```
 
