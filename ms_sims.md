@@ -28,7 +28,7 @@ But this still produces too many double hets.  I think this can be solved by int
 
 Here is the general structure of the sims:
 ```
-./msdir/ms 12 1000000 -t 1 -I 3 2 6 4 -n 1 0.08325 -n 2 0.25005 -n 3 0.666 -ej tao1 1 2 -ej tao0 2 3 > out
+./msdir/ms 12 1000000 -t 1 -I 3 2 6 4 -n 1 0.083 -n 2 0.250 -n 3 0.667 -ej tao1 1 2 -ej tao0 2 3 > out
 ```
 
 Where tao1 is the time that recombination stops and tao0 is the time of divergence of east and west
