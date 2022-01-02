@@ -27,7 +27,9 @@ This causes the population to split into 3 groups - the east W, the east Z and t
 But this still produces too many double hets.  I think this can be solved by introducing population structure where east and west diverge for a period of time before speciation of the sex chromosomes. I also am going to let the west population be 2X bigger than the east based on the observed polymorphism in non sex-linked regions
 
 Here is the general structure of the sims:
+```
 ./msdir/ms 12 1000000 -t 1 -I 3 2 6 4 -n 1 0.08325 -n 2 0.25005 -n 3 0.666 -ej tao1 1 2 -ej tao0 2 3 > out
+```
 
 Where tao1 is the time that recombination stops and tao0 is the time of divergence of east and west
 and
