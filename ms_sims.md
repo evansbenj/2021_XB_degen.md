@@ -108,7 +108,7 @@ my $acceptable=0;
 my $accepted=0;
 my $observed_ratio_1 = 4.9;
 my $observed_ratio_2 = 38.3;
-my $percentage = 0.2;
+my $percentage = 0.1;
 
 while ( my $line = <DATAINPUT>) {
 	chomp($line);
