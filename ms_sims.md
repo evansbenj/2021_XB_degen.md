@@ -34,7 +34,7 @@ This generates 100 simulations with:
 * theta = 4Neu = 100
 * `-I 3 2 6 4` : 2 samples of the W chr from pop1, 6 samples of the Z chr from pop2, 4 samples from pop3; no migration
 * `-n 1 0.083 -n 2 0.250 -n 3 0.667`: pop1 to be 1/12th of N_ancestral (W-chr), pop2 to be 3/12ths of N_ancestral (Z-chr) and pop3 to be 2/3rds of N_ancestral (west pop)
-* `-ej ".$y." 1 2 -ej ".$x." 2 3`: pop2 and pop3 coalesce at time $x and then these coalesce with pop3 at time $y
+* `-ej ".$y." 1 2 -ej ".$x." 2 3`: pop1 and pop2 coalesce at time $y and then these coalesce with pop3 at time $x
 
 
 # Summarizing sims
