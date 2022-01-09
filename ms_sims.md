@@ -36,6 +36,66 @@ This generates 100 simulations with:
 * `-n 1 0.083 -n 2 0.250 -n 3 0.667`: pop1 to be 1/12th of N_ancestral (W-chr), pop2 to be 3/12ths of N_ancestral (Z-chr) and pop3 to be 2/3rds of N_ancestral (west pop)
 * `-ej ".$y." 1 2 -ej ".$x." 2 3`: pop1 and pop2 coalesce at time $y and then these coalesce with pop3 at time $x
 
+# `ms` commandando for Scenario 3a
+```
+#!/usr/bin/env perl
+use strict;
+use warnings;
+
+# This program does a bunch of simulations for Xborealis sex chromosomes
+# using ms and then summarizes the results
+
+my $population_divergence_limit=0.5;
+my $x;
+my $y;
+my $status;
+
+# We need to simulate over a range of divergence values for tao0 (pop divergence)
+# and tao1 (recomb suppression)
+for ($x = 0 ; $x <= $population_divergence_limit ; $x+=0.01) {
+	for ($y = 0 ; $y <= $x ; $y+=0.01) {
+		print "Tao0 ",$x," tao1 ",$y,"\n";
+		# perform the first simulation
+		# pop1 is the east W; pop2 is the eastZ; pop3 is the west
+		# Scenario3a: Z becomes an autosome in west
+		# Scenario3b: W becomes an autosome in west
+		# this is Scenario3a:
+		$status = system("./msdir/ms 12 100000 -t 100 -I 3 2 6 4 -n 1 0.083 -n 2 0.250 -n 3 0.667 -ej ".$y." 3 2 -ej ".$x." 1 2 -en ".$y." 2 0.273 > out3a");
+		# now summarize the simulations
+		$status = system("./XB_SNPcount_EastWest_ms_sims_new.pl out3a out_all_3a");
+	}	# end of $y
+} # end of $x			
+```
+# `ms` commandando for Scenario 3b
+```
+#!/usr/bin/env perl
+use strict;
+use warnings;
+
+# This program does a bunch of simulations for Xborealis sex chromosomes
+# using ms and then summarizes the results
+
+my $population_divergence_limit=0.5;
+my $x;
+my $y;
+my $status;
+
+# We need to simulate over a range of divergence values for tao0 (pop divergence)
+# and tao1 (recomb suppression)
+for ($x = 0 ; $x <= $population_divergence_limit ; $x+=0.01) {
+	for ($y = 0 ; $y <= $x ; $y+=0.01) {
+		print "Tao0 ",$x," tao1 ",$y,"\n";
+		# perform the first simulation
+		# pop1 is the east W; pop2 is the eastZ; pop3 is the west
+		# Scenario3a: Z becomes an autosome in west
+		# Scenario3b: W becomes an autosome in west
+		# this is Scenario3b:
+		$status = system("./msdir/ms 12 100000 -t 100 -I 3 2 6 4 -n 1 0.083 -n 2 0.250 -n 3 0.667 -ej ".$y." 3 1 -ej ".$x." 1 2 -en ".$y." 1 0.111 > out3b");
+		# now summarize the simulations
+		$status = system("./XB_SNPcount_EastWest_ms_sims_new.pl out3b out_all_3b");
+	}	# end of $y
+} # end of $x			
+```
 
 # Summarizing sims
 ```
