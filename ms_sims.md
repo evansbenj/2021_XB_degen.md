@@ -169,6 +169,8 @@ my $accepted=0;
 my $observed_ratio_1 = 4.9;
 my $observed_ratio_2 = 38.3;
 my $percentage = 0.1;
+my $sims=0;
+my $sum_accepted_proportions=0;
 
 while ( my $line = <DATAINPUT>) {
 	chomp($line);
@@ -207,7 +209,6 @@ while ( my $line = <DATAINPUT>) {
 						($pattern eq '001111111010')||($pattern eq '001111110101')||
 						($pattern eq '001111111001')||($pattern eq '001111110110')){
 							$double_hets+=1;
-							#print "double_hets ",$pattern,"\n";
 						}
 					}
 				}
@@ -226,7 +227,16 @@ while ( my $line = <DATAINPUT>) {
 				$double_homoz_Wspecific=0;	
 				$double_homoz_Zspecific=0;
 				$double_hets=0;
-			}	
+				# weight the proportion equally for each simulation
+				$sims+=1;
+				if($acceptable>0){
+					print $accepted/$acceptable,"\n";
+					$sum_accepted_proportions+=$accepted/$acceptable; # this will be divided by the number of sims below
+				}
+				# reset counters for each sim	
+				$accepted=0;
+				$acceptable=0;
+			}
 		}
 	}
 	elsif($firstline==1){
@@ -239,8 +249,8 @@ while ( my $line = <DATAINPUT>) {
 	
 } # end while
 
-print "accepted ratio: ",$accepted/$acceptable," eligible_sites ",$acceptable,"\n";
-print OUTFILE "accepted ratio: ",$accepted/$acceptable," eligible_sites ",$acceptable,"\n";
+print "accepted ratio: ",$sum_accepted_proportions/$sims," eligible_sites ",$acceptable,"\n";
+print OUTFILE "mean_accepted_ratio: ",$sum_accepted_proportions/$sims," eligible_sites ",$acceptable,"\n";
 ```
 ## Contour plot
 ```R
