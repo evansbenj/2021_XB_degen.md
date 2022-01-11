@@ -23,7 +23,7 @@ for ($x = 0 ; $x <= $population_divergence_limit ; $x+=0.01) {
 	for ($y = 0 ; $y <= $x ; $y+=0.01) {
 		print "Tao0 ",$x," tao1 ",$y,"\n";
 		# perform the first simulation
-		$status = system("./msdir/ms 12 100000 -t 100 -I 3 2 6 4 -n 1 0.083 -n 2 0.250 -n 3 0.667 -ej ".$y." 1 2 -ej ".$x." 2 3 > out");
+		$status = system("./msdir/ms 12 100000 -t 100 -I 3 2 6 4 -n 1 0.083 -n 2 0.250 -n 3 0.667 -ej ".$y." 1 2 -ej ".$x." 2 3 > out2")
 		# now summarize the simulations
 		$status = system("./XB_SNPcount_EastWest_ms_sims_new.pl out out2");
 	}	# end of $y
@@ -60,7 +60,7 @@ for ($x = 0 ; $x <= $population_divergence_limit ; $x+=0.01) {
 		# Scenario3a: Z becomes an autosome in west
 		# Scenario3b: W becomes an autosome in west
 		# this is Scenario3a:
-		$status = system("./msdir/ms 12 100000 -t 100 -I 3 2 6 4 -n 1 0.083 -n 2 0.250 -n 3 0.667 -ej ".$y." 3 2 -ej ".$x." 1 2 -en ".$y." 2 0.273 > out3a");
+		$status = system("./msdir/ms 12 100000 -t 100 -I 3 2 6 4 -n 1 0.250 -n 2 0.750 -n 3 2.000 -ej ".$y." 3 2 -ej ".$x." 1 2 -en ".$y." 2 0.750 > out3a");
 		# now summarize the simulations
 		$status = system("./XB_SNPcount_EastWest_ms_sims_new.pl out3a out_all_3a");
 	}	# end of $y
@@ -90,7 +90,7 @@ for ($x = 0 ; $x <= $population_divergence_limit ; $x+=0.01) {
 		# Scenario3a: Z becomes an autosome in west
 		# Scenario3b: W becomes an autosome in west
 		# this is Scenario3b:
-		$status = system("./msdir/ms 12 100000 -t 100 -I 3 2 6 4 -n 1 0.083 -n 2 0.250 -n 3 0.667 -ej ".$y." 3 1 -ej ".$x." 1 2 -en ".$y." 1 0.111 > out3b");
+		$status = system("./msdir/ms 12 100000 -t 100 -I 3 2 6 4 -n 1 0.250 -n 2 0.750 -n 3 2.000 -ej ".$y." 3 1 -ej ".$x." 1 2 -en ".$y." 1 0.250 > out3b");
 		# now summarize the simulations
 		$status = system("./XB_SNPcount_EastWest_ms_sims_new.pl out3b out_all_3b");
 	}	# end of $y
