@@ -256,9 +256,9 @@ print OUTFILE "mean_accepted_ratio: ",$sum_accepted_proportions/$sims," eligible
 ```R
 setwd("/Users/Shared/Previously\ Relocated\ Items/Security/projects/2021_Xborealis_sexchr_degen/ms")
 par(mar=c(2,2,2,2)) 
-simulations <- read.table("ms_out_2_sparse.txt", header = T)
+#simulations <- read.table("ms_out_2_sparse.txt", header = T)
 #simulations <- read.table("ms_out_3a_sparse.txt", header = T)
-#simulations <- read.table("ms_out_3b_sparse.txt", header = T)
+simulations <- read.table("ms_out_3b_sparse.txt", header = T)
 #t0 <- simulations$T0[simulations$T0<9]
 #t1 <- simulations$T1[simulations$T0<9]
 #lnL <- simulations$lnL[simulations$T0<9]
@@ -287,6 +287,7 @@ png(filename = "contour_2_sparse.png",w=500, h=400,units = "px", bg="transparent
   par(mar=c(4,6,4,4)) 
   filled.contour(x, y, lnL_matrix,
                  nlevels = 100,
+                 zlim = c(-15,-7),
                lwd = 1, lty = 1.5,
                #color.palette=colorRampPalette(c('white','light blue','blue','yellow','red','darkred')),
                #color.palette=colorRampPalette(c('white','blue','yellow','red','darkred')),
