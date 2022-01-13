@@ -255,40 +255,55 @@ print OUTFILE "mean_accepted_ratio: ",$sum_accepted_proportions/$sims," eligible
 ## Contour plot
 ```R
 setwd("/Users/Shared/Previously\ Relocated\ Items/Security/projects/2021_Xborealis_sexchr_degen/ms")
-par(mfrow=c(2,2), mar=c(2,2,2,2)) 
-simulations <- read.table("ms_out.txt", header = T)
-t0 <- simulations$T0[simulations$T0<0.40]
-t1 <- simulations$T1[simulations$T0<0.40]
-lnL <- simulations$lnL[simulations$T0<0.40]
+par(mar=c(1,1,1,1)) 
+#simulations <- read.table("ms_out_2_sparse.txt", header = T)
+#simulations <- read.table("ms_out_3a_sparse.txt", header = T)
+simulations <- read.table("ms_out_3b_sparse.txt", header = T)
+#t0 <- simulations$T0[simulations$T0<9]
+#t1 <- simulations$T1[simulations$T0<9]
+#lnL <- simulations$lnL[simulations$T0<9]
 #View(simulations)
 
-lnL_matrix <- matrix(nrow=40,ncol=40)
-simulations[832,"T0"]
+# column dimensions should be 1 higher than the highest param to include zeros
+lnL_matrix <- matrix(nrow=20,ncol=20)
+#10*simulations[200,"T1"]
 # make a new matrix out of the dat df
 for(i in seq(from=1, to=nrow(simulations))){
   #print(paste(100*simulations[i,"T0"]+1,100*simulations[i,"T1"]+1,-simulations[i,"lnL"]))
-  lnL_matrix[100*simulations[i,"T0"]+1,100*simulations[i,"T1"]+1]<- -simulations[i,"lnL"]
+  #lnL_matrix[100*simulations[i,"T0"]+1,100*simulations[i,"T1"]+1]<- -simulations[i,"lnL"]
+  lnL_matrix[10*simulations[i,"T0"]+1,10*simulations[i,"T1"]+1]<- simulations[i,"lnL"]
 }
-lnL_matrix[29,1]<- 0
-View(lnL_matrix)
-x<-seq(0,0.39,0.01) # this will be t0
-y<-seq(0,0.39,0.01) # this will be t1
-#jet.colors <-colorRampPalette(c("#00007F", "blue", "#007FFF", "cyan","#7FFF7F", "yellow", "#FF7F00", "red", "#7F0000"))
-png(filename = "contour.png",w=500, h=500,units = "px", bg="transparent")
+#lnL_matrix[29,1]<- 0
+#View(lnL_matrix)
+x<-seq(0,1.9,0.1) # this will be t0
+y<-seq(0,1.9,0.1) # this will be t1
+#x<-seq(0,0.39,0.01) # this will be t0
+#y<-seq(0,0.39,0.01) # this will be t1
+jet.colors <-colorRampPalette(c("#00007F", "blue", "#007FFF", "cyan","#7FFF7F", "yellow", "#FF7F00", "red", "#7F0000"))
+par(fg = NA,col="black")
+
+png(filename = "contour_3b_sparse.png",w=500, h=500,units = "px", bg="transparent")
+  par(fg = NA,col="black")  
   filled.contour(x, y, lnL_matrix,
                  nlevels = 100,
                lwd = 2, lty = 1,
-               color.palette=colorRampPalette(c('white','white','white','white','white','white','white','white','white','white','white','light blue','blue','yellow','red','darkred','black')),
+               #color.palette=colorRampPalette(c('white','light blue','blue','yellow','red','darkred')),
                #color.palette=colorRampPalette(c('white','blue','yellow','red','darkred')),
-               #olor = jet.colors, 
+               color = jet.colors, 
                #color.palette = colorRampPalette(YlOrBr, space = "Lab"),
                #color.palette = colorRampPalette(c("red", "white", "blue")),
                #color = terrain.colors,
-               xlab = "t0", 
-               ylab = "t1",
-               key.title = {par(cex.main=1);title(main="        -lnL")},
-               )
+               plot.title={par(cex.lab=2);title(xlab="t0", ylab="t1")},
+              # xlab = "t0", 
+              # ylab = "t1",
+               key.title = {par(cex.main=2);title(main="        -lnL")},
+               plot.axes={
+                 axis(1,cex.axis=2)
+                 axis(2,cex.axis=2)
+               }
+                )
 dev.off()
+
 
 ```
 ## Simulating panmixia (applies to the recombining portion of Chr8L; not used)
