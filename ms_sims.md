@@ -255,10 +255,10 @@ print OUTFILE "mean_accepted_ratio: ",$sum_accepted_proportions/$sims," eligible
 ## Contour plot
 ```R
 setwd("/Users/Shared/Previously\ Relocated\ Items/Security/projects/2021_Xborealis_sexchr_degen/ms")
-par(mar=c(1,1,1,1)) 
-#simulations <- read.table("ms_out_2_sparse.txt", header = T)
+par(mar=c(2,2,2,2)) 
+simulations <- read.table("ms_out_2_sparse.txt", header = T)
 #simulations <- read.table("ms_out_3a_sparse.txt", header = T)
-simulations <- read.table("ms_out_3b_sparse.txt", header = T)
+#simulations <- read.table("ms_out_3b_sparse.txt", header = T)
 #t0 <- simulations$T0[simulations$T0<9]
 #t1 <- simulations$T1[simulations$T0<9]
 #lnL <- simulations$lnL[simulations$T0<9]
@@ -282,28 +282,29 @@ y<-seq(0,1.9,0.1) # this will be t1
 jet.colors <-colorRampPalette(c("#00007F", "blue", "#007FFF", "cyan","#7FFF7F", "yellow", "#FF7F00", "red", "#7F0000"))
 par(fg = NA,col="black")
 
-png(filename = "contour_3b_sparse.png",w=500, h=500,units = "px", bg="transparent")
+png(filename = "contour_2_sparse.png",w=500, h=400,units = "px", bg="transparent")
   par(fg = NA,col="black")  
+  par(mar=c(4,6,4,4)) 
   filled.contour(x, y, lnL_matrix,
                  nlevels = 100,
-               lwd = 2, lty = 1,
+               lwd = 1, lty = 1.5,
                #color.palette=colorRampPalette(c('white','light blue','blue','yellow','red','darkred')),
                #color.palette=colorRampPalette(c('white','blue','yellow','red','darkred')),
                color = jet.colors, 
                #color.palette = colorRampPalette(YlOrBr, space = "Lab"),
                #color.palette = colorRampPalette(c("red", "white", "blue")),
                #color = terrain.colors,
-               plot.title={par(cex.lab=2);title(xlab="t0", ylab="t1")},
+               plot.title={par(cex.lab=2);title(xlab=expression(tau[0]), 
+                                                ylab=expression(tau[1]))},
               # xlab = "t0", 
               # ylab = "t1",
                key.title = {par(cex.main=2);title(main="        -lnL")},
                plot.axes={
-                 axis(1,cex.axis=2)
-                 axis(2,cex.axis=2)
+                 axis(1,cex.axis=1.5)
+                 axis(2,cex.axis=1.5)
                }
                 )
 dev.off()
-
 
 ```
 ## Simulating panmixia (applies to the recombining portion of Chr8L; not used)
