@@ -33,12 +33,14 @@ cat BJE4441_female_west_merge_sorted_dedup.bam_rg.bam_Chr7S.vcf | awk '$1 ~ /^#/
 bgzip -c BJE4441_female_west_merge_sorted_dedup.bam_rg.bam_Chr7S_sorted.vcf > BJE4441_female_west_merge_sorted_dedup.bam_rg.bam_Chr7S_sorted.vcf.gz
 tabix -p vcf BJE4441_female_west_merge_sorted_dedup.bam_rg.bam_Chr7S_sorted.vcf.gz
 ```
+# Use lumpy to identify structural variants
 
 # Making a json file for each bam file
 
 In this directory:
 ```
 /home/ben/projects/rrg-ben/ben/2021_Austin_XB_genome/XB_wild_east_west_WGS_data/bam_dedup_rg
+```
 ```
 module load gcc bwa samtools bcftools blast muscle primer3 python/2.7
 virtualenv --no-download vcf_env
@@ -53,3 +55,12 @@ gdc-readgroups bam-mode --b BJE4536_male_east_merge_sorted_dedup.bam_rg_Chr7S.ba
 gdc-readgroups bam-mode --b BJE4515_female_east_merge_sorted_dedup.bam_rg_Chr7S.bam
 gdc-readgroups bam-mode --b BJE4442_male_west_merge_sorted_dedup.bam_rg.bam_Chr7S.bam
 gdc-readgroups bam-mode --b BJE4441_female_west_merge_sorted_dedup.bam_rg.bam
+```
+# Analyze the lumpy vcf file with sctyper
+```
+/home/ben/projects/rrg-ben/ben/2021_Austin_XB_genome/XB_wild_east_west_WGS_data/bam_dedup_rg/svtyper
+```
+```
+./svtyper.sh ../BJE4515_female_east_merge_sorted_dedup.bam_rg_Chr7S_sorted ../BJE4515_female_east_merge_sorted_dedup.bam_rg_Chr7S
+```
+
