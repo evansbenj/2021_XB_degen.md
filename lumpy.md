@@ -35,7 +35,7 @@ tabix -p vcf BJE4441_female_west_merge_sorted_dedup.bam_rg.bam_Chr7S_sorted.vcf.
 ```
 # Use lumpy to identify structural variants
 
-# Making a json file for each bam file
+# Making a json file for each bam file (this can also be done with svtyper I think - check readme)
 
 In this directory:
 ```
@@ -57,6 +57,7 @@ gdc-readgroups bam-mode --b BJE4442_male_west_merge_sorted_dedup.bam_rg.bam_Chr7
 gdc-readgroups bam-mode --b BJE4441_female_west_merge_sorted_dedup.bam_rg.bam
 ```
 # Analyze the lumpy vcf file with sctyper
+Directory:
 ```
 /home/ben/projects/rrg-ben/ben/2021_Austin_XB_genome/XB_wild_east_west_WGS_data/bam_dedup_rg/svtyper
 ```
@@ -66,6 +67,15 @@ gdc-readgroups bam-mode --b BJE4441_female_west_merge_sorted_dedup.bam_rg.bam
 
 # Analyze bam with ClipSV
 ```
+/home/ben/projects/rrg-ben/ben/2021_Austin_XB_genome/XB_wild_east_west_WGS_data/bam_dedup_rg/ClipSV
+```
+
+```
+module load StdEnv/2020 minimap2/2.24
+module load samtools bedtools
+module load velvet
+source activate python3
+PATH=$PWD/ClipSV/:$PATH
 python3 ./clipsv.py -t 1 -b ../BJE4515_female_east_merge_sorted_dedup.bam_rg_Chr7S.bam -g ../../../Austin_genome/Xbo_Chr7S.fa
 ```
 
