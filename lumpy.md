@@ -64,3 +64,8 @@ gdc-readgroups bam-mode --b BJE4441_female_west_merge_sorted_dedup.bam_rg.bam
 ./svtyper.sh ../BJE4515_female_east_merge_sorted_dedup.bam_rg_Chr7S_sorted ../BJE4515_female_east_merge_sorted_dedup.bam_rg_Chr7S
 ```
 
+# Analyze bam with ClipSV
+```
+python3 ./clipsv.py -t 1 -b ../BJE4515_female_east_merge_sorted_dedup.bam_rg_Chr7S.bam -g ../../../Austin_genome/Xbo_Chr7S.fa
+```
+
