@@ -137,13 +137,13 @@ library(ggplot2)
 library("reshape") 
 
 setwd('/Users/Shared/Previously Relocated Items/Security/projects/submitted/2021_Xborealis_sexchr_degen/RADseq_counts_in_west_of_SNPs_in_east')
-dat<-read.table("./temp.out",header=TRUE)
+dat<-read.table("./Chr7S_binary.out",header=TRUE)
 
 # subset to include only Wundyani individuals
 wundyani <- dat[,c(1,26:30,51:55)]
 tail(wundyani)
-wundyani_SL <- filter(wundyani, pos < 105733990) # length 105733990
-                                                # or for SL region 23000000
+wundyani_SL <- filter(wundyani, pos < 105733990) # length 105733990 for Chr7S
+
 dim(wundyani_SL)
 wundyani_SL$pos <- factor(wundyani_SL$pos)
 wundyani_SL_sorted <- wundyani_SL[order(as.numeric(as.character(wundyani_SL$pos))), ]
@@ -180,11 +180,6 @@ names(wundyani_SL_sorted)[9] <- "Mal BJE4538"
 names(wundyani_SL_sorted)[10] <- "Mal BJE4539"
 names(wundyani_SL_sorted)[11] <- "Mal BJE4540"
 
-#heatmap(as.matrix(wundyani), Rowv = NA, Colv = NA)
-#wundyani_SL_sorted$pos <- as.character(wundyani_SL_sorted$pos)
-
-
- 
 wundyani_SL_sorted_melt <- melt(wundyani_SL_sorted,id=c("pos"))    # Reorder data
 head(wundyani_SL_sorted_melt)
 
@@ -205,32 +200,41 @@ wundyani_SL_sorted_melt <- wundyani_SL_sorted_melt[order(as.numeric(as.character
 dim(wundyani_SL_sorted_melt)
 names(wundyani_SL_sorted_melt)[1] <- "Position"
 names(wundyani_SL_sorted_melt)[2] <- "Sample"
+names(wundyani_SL_sorted_melt)[3] <- "Genotype"
 ggp <- ggplot(wundyani_SL_sorted_melt, aes(Position, Sample)) +  
-    geom_tile(aes(fill = value))+ 
+    geom_tile(aes(fill = Genotype))+ 
     scale_fill_manual(values=c(red="light blue", purple = "dark gray", blue="black", 
                  white = "white"),
                  labels = c(red="homoz ref", purple = "heteroz", 
                             blue="homoz alt", white = "missing")) +
     theme_classic() +
-    #theme(axis.text.x=element_text(angle=45,hjust=1)) +
+   # theme(axis.text.x=element_text(angle=45,hjust=1)) +
     theme(axis.text.x=element_blank(),axis.ticks.x = element_blank()) +
+    scale_x_discrete(name="Position (Mb)") +
     geom_rect(data=wundyani_SL_sorted_melt, 
-              mapping=aes(xmin=2, xmax=195, 
+              mapping=aes(xmin=2, xmax=205, 
                           ymin=7.5, ymax=10.5), 
               color="red", alpha=0, size=1) +
     geom_rect(data=wundyani_SL_sorted_melt, 
-              mapping=aes(xmin=2, xmax=195, 
+              mapping=aes(xmin=2, xmax=205, 
                           ymin=5.5, ymax=7.4), 
-              color="blue", alpha=0, size=1) #+
+              color="blue", alpha=0, size=1) +
+    geom_rect(data=wundyani_SL_sorted_melt, 
+              mapping=aes(xmin=2, xmax=205, 
+                          ymin=0.5, ymax=5.4), 
+              color="gray32", alpha=0, size=1) +
+    theme(axis.title.x = element_text(vjust=-0.5))
 #    geom_rect(data=wundyani_SL_sorted_melt, 
 #              mapping=aes(xmin=2, xmax=195, 
 #                          ymin=0.5, ymax=5.4), 
 #              color="black", alpha=0, size=1)
-
+require(grid)
 pdf("./Chr7S_haplotypeMatrix.pdf",w=8, h=2.0, version="1.4", bg="transparent")
     ggp   
+    grid.text("0", x = unit(0.14, "npc"), y = unit(0.11, "npc"), gp = gpar(fontsize = 10))
+    grid.text("23.0", x = unit(0.38, "npc"), y = unit(0.11, "npc"), gp = gpar(fontsize = 10))
+    grid.text("105.7", x = unit(0.84, "npc"), y = unit(0.11, "npc"), gp = gpar(fontsize = 10))
 dev.off()
-
 
 ```
 # Plot Chr8L
