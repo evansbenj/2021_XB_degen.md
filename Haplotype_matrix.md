@@ -1,4 +1,13 @@
 # Generate input file for plotting
+directory:
+```
+/home/ben/projects/rrg-ben/ben/2021_Austin_XB_genome/XB_RADseq_mapped_to_AustinXB_BJE_2021/combined_and_genotyped_vcfs_trim
+```
+```
+bcftools view XBwild_unfiltered_allchrs.vcf.gz_filtered.vcf.gz_filtered_removed.vcf.gz --regions Chr8L -o XBwild_unfiltered_allchrs.vcf.gz_filtered.vcf.gz_filtered_removed_Chr8L.vcf.gz -O z
+module load StdEnv/2020 vcftools/0.1.16
+zcat XBwild_unfiltered_allchrs.vcf.gz_filtered.vcf.gz_filtered_removed_Chr8L.vcf.gz | vcf-to-tab > XBwild_unfiltered_allchrs.vcf.gz_filtered.vcf.gz_filtered_removed_Chr8L.vcf.gz.tab
+```
 ```
 #!/usr/bin/env perl
 use strict;
