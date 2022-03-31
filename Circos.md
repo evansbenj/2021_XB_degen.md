@@ -22,7 +22,7 @@ chrs <- factor(c("Chr1L","Chr2L","Chr3L","Chr4L","Chr5L","Chr6L","Chr7L","Chr8L"
 # Initialize library
 
 png("sex_linkage_circos.png",
-    width = 100, height = 100, units='mm', res = 300)
+    width = 100, height = 100, units='mm', res = 600)
 
 # set up chr structure
 chr_structure <- data.frame(CHR= c("Chr1L","Chr2L","Chr3L","Chr4L","Chr5L",
@@ -66,7 +66,8 @@ circos.initializeWithIdeogram(chr_structure, plotType = c("axis", "labels"),
 
 #chr8l
 draw.sector(286, 293, rou1 = 0.87, rou2 = 0.57, 
-            clock.wise = FALSE, col = "lightpink", border = NA) # red over track 1
+            clock.wise = FALSE, col = "#FFAEB980", border = NA) # got the color code like this
+                                        # add_transparency("lightpink1", 0.5)
 
 #chr7S
 draw.sector(223, 226.5, rou1 = 0.87, rou2 = 0.69, 
@@ -87,9 +88,9 @@ for (sample in sample_vector){
   # make a dataframe for circular plotting
   Allchr_circular <- as.data.frame(a[,c(1,3,9,11)])
   # make a column to color values with low pvalues
-  Allchr_circular$color <- "light gray"
+  Allchr_circular$color <- "dark gray"
   Allchr_circular[c("color")][which(Allchr_circular$P < 0.003), ] <- 'red'
-  Allchr_circular[c("color")][which((Allchr_circular$P > 0.003)&(Allchr_circular$P < 0.03)), ] <- 'orange'
+  Allchr_circular[c("color")][which((Allchr_circular$P > 0.003)&(Allchr_circular$P < 0.03)), ] <- 'dark gray'
   
   # generate a variable that determines which points are plotted first
   Allchr_circular$order <- 1
@@ -135,18 +136,18 @@ for (sample in sample_vector){
 library(ComplexHeatmap)
 library(rjson)
 # legend
-  col_fun = colorRamp2(c(0, 0.5, 1), c("light gray", "orange", "red"))
-  lgd_points = Legend(at = c("P < 0.003", "0.003 < P < 0.03", "P > 0.03"), 
+  col_fun = colorRamp2(c(0, 1), c("dark gray", "red"))
+  lgd_points = Legend(at = c("P < 0.003", "P > 0.003"), 
     type = "points", size = unit(0.8, "mm"),
     ncol = 1, background = "white",
-    legend_gp = gpar(col = c("red", "orange", "light gray")), 
+    legend_gp = gpar(col = c("red", "dark gray")), 
     title_position = "topcenter", labels_gp = gpar(cex=0.5),
     title = "")
   draw(lgd_points, x = unit(0.85, "npc"), 
        y = unit(0.13, "npc"), just = "centre", 
        test = FALSE)
+
   
+    
 dev.off()
-while (!is.null(dev.list()))  dev.off()
-dev.set(dev.next())
 ```
