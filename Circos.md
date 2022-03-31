@@ -122,12 +122,31 @@ for (sample in sample_vector){
   circos.trackPoints(Allchr_circular$chr, x = Allchr_circular$start, 
                      y = Allchr_circular$minus_log_P, 
                      track.index = get.cell.meta.data("track.index"),
-                     pch = 16, cex=0.4, col = Allchr_circular$color)
+                     pch = 16, cex=0.2, col = Allchr_circular$color)
 
 }
 
 # label the species in the center
   text(0, 0, "S   L", cex = 1.5)
 
+# if (!require("BiocManager", quietly = TRUE))
+#    install.packages("BiocManager")
+#      BiocManager::install("ComplexHeatmap")
+library(ComplexHeatmap)
+library(rjson)
+# legend
+  col_fun = colorRamp2(c(0, 0.5, 1), c("light gray", "orange", "red"))
+  lgd_points = Legend(at = c("P < 0.003", "0.003 < P < 0.03", "P > 0.03"), 
+    type = "points", size = unit(0.8, "mm"),
+    ncol = 1, background = "white",
+    legend_gp = gpar(col = c("red", "orange", "light gray")), 
+    title_position = "topcenter", labels_gp = gpar(cex=0.5),
+    title = "")
+  draw(lgd_points, x = unit(0.85, "npc"), 
+       y = unit(0.13, "npc"), just = "centre", 
+       test = FALSE)
+  
 dev.off()
+while (!is.null(dev.list()))  dev.off()
+dev.set(dev.next())
 ```
