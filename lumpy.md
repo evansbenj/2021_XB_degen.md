@@ -18,8 +18,7 @@ https://github.com/arq5x/lumpy-sv
 
 # run by passing an argument like this (in the directory with the files)
 # sbatch 2020_align_paired_fq_to_ref.sh pathandname_of_ref path_to_paired_fq_filez
-# sbatch 2020_align_paired_fq_to_ref.sh /home/ben/projects/rrg-ben/ben/2018_Austin_XB_genome/Austin_genome/Xbo.v1.fa.gz p
-athtofqfilez
+# sbatch 2020_align_paired_fq_to_ref.sh /home/ben/projects/rrg-ben/ben/2018_Austin_XB_genome/Austin_genome/Xbo.v1.fa.gz pathtofqfilez
 
 module load bwa/0.7.17
 module load samtools/1.10
@@ -31,7 +30,7 @@ for file in ${2}/*_trim.R1.fq.gz ; do         # Use ./* ... NEVER bare *
 s --maxSplitCount 2 --minNonOverlap 20 | samtools view -S -b - > ${file::-14}_lumpy.bam
     fi
 done
-``
+```
 
 
 # Analyze bam with lumpy
