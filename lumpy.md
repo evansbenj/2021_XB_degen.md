@@ -18,7 +18,8 @@ https://github.com/arq5x/lumpy-sv
 
 # run by passing an argument like this (in the directory with the files)
 # sbatch 2020_align_paired_fq_to_ref.sh pathandname_of_ref path_to_paired_fq_filez
-# sbatch 2020_align_paired_fq_to_ref.sh /home/ben/projects/rrg-ben/ben/2018_Austin_XB_genome/Austin_genome/Xbo.v1.fa.gz pathtofqfilez
+# sbatch 2020_align_paired_fq_to_ref.sh /home/ben/projects/rrg-ben/ben/2018_Austin_XB_genome/Austin_genome/Xbo.v1.fa.gz
+ pathtofqfilez
 
 module load bwa/0.7.17
 module load samtools/1.10
@@ -26,12 +27,92 @@ module load StdEnv/2020 samblaster/0.1.26
 
 for file in ${2}/*_trim.R1.fq.gz ; do         # Use ./* ... NEVER bare *    
     if [ -e "$file" ] ; then   # Check whether file exists.
-	bwa mem ${1} ${file::-14}_trim.R1.fq.gz ${file::-14}_trim.R2.fq.gz -t 16 |  samblaster --excludeDups --addMateTag
-s --maxSplitCount 2 --minNonOverlap 20 | samtools view -S -b - > ${file::-14}_lumpy.bam
+	bwa mem ${1} ${file::-14}_trim.R1.fq.gz ${file::-14}_trim.R2.fq.gz -t 16 |  samblaster --excludeDups --addMateT
+ags --maxSplitCount 2 --minNonOverlap 20 | samtools view -S -b - > ${file::-14}_lumpy.bam
     fi
 done
 ```
+# Merge if multiple fastq files aligned separately
+```
+#!/bin/sh
+#SBATCH --job-name=merge
+#SBATCH --nodes=4
+#SBATCH --ntasks-per-node=4
+#SBATCH --time=32:00:00
+#SBATCH --mem=16gb
+#SBATCH --output=merge.%J.out
+#SBATCH --error=merge.%J.err
+#SBATCH --account=def-ben
 
+# run by passing an argument like this (in the directory with the files)
+# sbatch 2021_samtools_merge4.sh merged_path_and_file in1_path_and_file in2_path_and_file in3_path_and_file in4_path_an
+d_file
+module load samtools/1.10
+
+samtools merge ${1} ${2} ${3} ${4} ${5}
+samtools index ${1)
+```
+# Extract discordants and splitters
+```
+#!/bin/sh
+#SBATCH --job-name=discordant
+#SBATCH --nodes=4
+#SBATCH --ntasks-per-node=4
+#SBATCH --time=32:00:00
+#SBATCH --mem=16gb
+#SBATCH --output=discordant.%J.out
+#SBATCH --error=discordant.%J.err
+#SBATCH --account=def-ben
+
+# run by passing an argument like this (in the directory with the files)
+# sbatch 2022_samtools_extractdiscordant.sh path_and_file_bam
+module load samtools/1.10
+
+# Extract the discordant paired-end alignments.
+ samtools view -b -F 1294 ${1} > ${1}.discordants.unsorted.bam
+
+# Extract the split-read alignments
+samtools view -h ${1} \
+    | /home/ben/projects/rrg-ben/ben/2021_Austin_XB_genome/bin/lumpy-sv/scripts/extractSplitReads_BwaMem -i stdin \
+    | samtools view -Sb - \
+    > ${1}.splitters.unsorted.bam
+
+# Sort both alignments
+samtools sort ${1}.discordants.unsorted.bam -o ${1}.discordants.sorted.bam
+samtools sort ${1}.splitters.unsorted.bam -o ${1}.splitters.sorted.bam
+```
+# Run lumpy on multiple files
+```
+#!/bin/sh
+#SBATCH --job-name=lumpyexpress
+#SBATCH --nodes=4
+#SBATCH --ntasks-per-node=4
+#SBATCH --time=32:00:00
+#SBATCH --mem=16gb
+#SBATCH --output=lumpyexpress.%J.out
+#SBATCH --error=lumpyexpress.%J.err
+#SBATCH --account=def-ben
+
+# run by passing an argument like this (in the directory with the files)
+# sbatch 2022_samtools_extractdiscordant.sh path_and_file_bam
+module load python/3.8
+module load StdEnv/2020
+module load scipy-stack/2020b
+module load samtools/1.10
+module load samblaster/0.1.26 sambamba/0.8.0 lumpy/0.2.13
+
+lumpyexpress \
+    -K /home/ben/projects/rrg-ben/ben/2021_Austin_XB_genome/ben_scripts/lumpyexpress.config \
+    -B sample1.bam,sample2.bam,sample3.bam \
+    -S sample1.splitters.bam,sample2.splitters.bam,sample3.splitters.bam \
+    -D sample1.discordants.bam,sample2.discordants.bam,sample3.discordants.bam \
+    -o multi_sample.vcf
+```
+
+
+
+
+# BELOW NOT USED
 
 # Analyze bam with lumpy
 ```
