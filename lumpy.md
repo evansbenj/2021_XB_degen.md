@@ -136,6 +136,18 @@ smoove call -x --name my-cohort --exclude $bed --fasta $reference_fasta -p $thre
 smoove call -x --name testipooh /home/ben/projects/rrg-ben/ben/2021_Austin_XB_genome/Austin_genome/Xbo.v1.fa --genotype /home/ben/projects/rrg-ben/ben/2021_Austin_XB_genome/lumpy_linkz/*.bam
 ```
 
+# Visualization with Samplot
+Useful video to demonstrate capability:
+```
+https://www.youtube.com/watch?v=-2Iyq3gkXGM
+```
+Installation instead of conda:
+```
+module load StdEnv/2020 python/3.10.2
+pip install samplot
+pip install pysam
+```
+
 
 # BELOW NOT USED
 
