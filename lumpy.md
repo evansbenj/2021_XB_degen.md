@@ -109,7 +109,32 @@ lumpyexpress \
     -o multi_sample.vcf
 ```
 
+# Smoove
 
+Smoove is a new wrapper for lumpy that implements filtering steps and streamlines genotyping of structural variants:
+https://brentp.github.io/post/smoove/
+
+The files need to be named in a specific way that matches their readgroups.  I did this here on graham (all are sorted and indexed):
+```
+/home/ben/projects/rrg-ben/ben/2021_Austin_XB_genome/lumpy_linkz
+```
+There are lots of dependencies for smoove.  Some are available as modules on computecanada and I installed the others:
+```
+module load StdEnv/2020 python/2.7.18
+pip install git+https://github.com/hall-lab/svtyper.git
+had to do a download and local install of a python module to get svtools to install:
+python -m pip install ./pandas-0.19.2.tar.gz 
+```
+had to tweak something for git to get mosdepth to install:
+```
+git config --global url."https://github.com/".insteadOf git://github.com/
+```
+I added lots of paths to my bash_profile to make them run smoothly
+```
+emacs ~/.bash_profile
+smoove call -x --name my-cohort --exclude $bed --fasta $reference_fasta -p $threads --genotype /path/to/*.bam
+smoove call -x --name testipooh /home/ben/projects/rrg-ben/ben/2021_Austin_XB_genome/Austin_genome/Xbo.v1.fa --genotype /home/ben/projects/rrg-ben/ben/2021_Austin_XB_genome/lumpy_linkz/*.bam
+```
 
 
 # BELOW NOT USED
