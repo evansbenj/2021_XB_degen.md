@@ -148,6 +148,13 @@ pip install samplot
 pip install pysam
 ```
 
+# Samplot
+I got this to work locally:
+```
+samplot plot -n BJE4515 -b WGS_chr8L_7S_bams/BJE4515_female.split_Chr7S.bam -o BJE4515_Chr7S_10_21Mb_split.png -c Chr7S -s 10000000 -e 21000000 -t INV --maxmb 20
+```
+But not yet on computecanada.
+
 
 # BELOW NOT USED
 
