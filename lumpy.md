@@ -135,6 +135,47 @@ emacs ~/.bash_profile
 smoove call -x --name my-cohort --exclude $bed --fasta $reference_fasta -p $threads --genotype /path/to/*.bam
 smoove call -x --name testipooh /home/ben/projects/rrg-ben/ben/2021_Austin_XB_genome/Austin_genome/Xbo.v1.fa --genotype /home/ben/projects/rrg-ben/ben/2021_Austin_XB_genome/lumpy_linkz/*.bam
 ```
+# Mean and Stdev of insert size
+Smoove stalled because of a lack of mean and stdev of insert size in the bam files for some reason.  I got this info using picard:
+```
+#!/bin/sh
+#SBATCH --job-name=picard_CollectInsertSizeMetrics
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --time=2:00:00
+#SBATCH --mem=5gb
+#SBATCH --output=picard_CollectInsertSizeMetrics.%J.out
+#SBATCH --error=picard_CollectInsertSizeMetrics.%J.err
+#SBATCH --account=def-ben
+
+# run by passing an argument like this
+# sbatch 2021_picard_dedup.sh pathtobamfile/bamfile_prefix
+
+module load java
+export JAVA_TOOL_OPTIONS="-Xmx4g"
+export _JAVA_OPTIONS="-Xms4g -Xmx4g"
+
+# must first add readgroups with picard
+module load StdEnv/2020 picard/2.23.3
+
+java -jar $EBROOTPICARD/picard.jar CollectInsertSizeMetrics \
+     I=${1}.bam \
+     O=${1}_insert_size_metrics.txt \
+     H=${1}_insert_size_histogram.pdf \
+     M=0.5
+
+```
+Here it is:
+```
+BJE4441	330.684029	173.781016
+BJE4442	310.207009	164.701375
+BJE4515	302.017012	161.943021
+BJE4536	301.858378	160.435949
+SRR6357672	356.495925	186.347855
+SRR6357673	315.088236	172.2336
+```
+I can put this information in the outfile/testipooh-lumpy-cmd.sh and then execute this file to (supposedly) get things to startup again...
+
 
 # Visualization with Samplot
 Useful video to demonstrate capability:
