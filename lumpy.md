@@ -176,6 +176,13 @@ SRR6357673	315.088236	172.2336
 ```
 I can put this information in the outfile/testipooh-lumpy-cmd.sh and then execute this file to (supposedly) get things to startup again...
 
+# Output
+The output file was a vcf and this was piped to the out file of each sbatch run.  So it is important to keep track of the run ID number and then change the .out file to a .vcf file.  The vcf file then needs to be sorted and indexed before samplot can work with it:
+```
+cat smoove_out_splitonly.vcf | awk '$1 ~ /^#/ {print $0;next} {print $0 | "sort -k1,1 -k2,2n"}' > smoove_out_splitonly_sorted.vcf
+bgzip -c smoove_out_splitonly_sorted.vcf > smoove_out_splitonly_sorted.vcf.gz
+tabix -p vcf smoove_out_splitonly_sorted.vcf.gz
+```
 
 # Visualization with Samplot
 Useful video to demonstrate capability:
