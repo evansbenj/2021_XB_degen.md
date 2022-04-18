@@ -37,57 +37,48 @@ library(gdsfmt)
 #    BiocManager::install("SNPRelate")
 library(SNPRelate)
 
-#vcf.fn <- "XBwild_unfiltered_allchrs.vcf.gz_filtered.vcf.gz_filtered_removed_Chr7S_notSL.recode.vcf"
-#vcf.fn <- "XBwild_unfiltered_allchrs.vcf.gz_filtered.vcf.gz_filtered_removed_Chr7S_XMXVXB_notSL.recode.vcf"
-#vcf.fn <- "allsites_Chr7S_XMXVXB_notSL.recode.vcf"
-pseudoonly <- "allsites_Chr8L_SNPs.vcf.gz_filtered.vcf.gz_filtered_removed_pseudoonly.vcf.gz"
-#vcf.fn <- "allsites_Chr8L_SNPs.vcf.gz_filtered.vcf.gz_filtered_removed_30000000_40000000.vcf.gz"
-#vcf.fn <- "allsites_Chr8L_SNPs.vcf.gz_filtered.vcf.gz_filtered_removed_27000000_30000000.vcf.gz"
-#vcf.fn <- "allsites_Chr8L_SNPs.vcf.gz_filtered.vcf.gz_filtered_removed_63000000_93000000.vcf.gz"
+pseudoonly <- "allsites_allchrs_SNPs.vcf.gz_filtered.vcf.gz_filtered_removed_noSL_noChr8L_1_54100000.vcf.gz"
 SLonly <-  "allsites_Chr8L_SNPs.vcf.gz_filtered.vcf.gz_filtered_removed_SLonly.vcf.gz"
-#vcf.fn <- "allsites_Chr8L_SNPs.vcf.gz_filtered.vcf.gz_filtered_removed_1_27000000.vcf.gz"
+
+# read data
 snpgdsVCF2GDS(pseudoonly, "pseudo", method="biallelic.only",ignore.chr.prefix = c("chr","Scaffold","chr9_"))
 snpgdsVCF2GDS(SLonly, "SL", method="biallelic.only",ignore.chr.prefix = c("chr","Scaffold","chr9_"))
 
 pseudo_genofile = snpgdsOpen("pseudo", readonly=FALSE)
 SL_genofile = snpgdsOpen("SL", readonly=FALSE)
 
+# add annotation
 samp.annot<-data.frame(pop.group = c("female_W","male_W","female_E","male_E","male_lab",
                                      "female_lab"))
 
 add.gdsn(pseudo_genofile, "sample.annot", val=samp.annot)
 add.gdsn(SL_genofile, "sample.annot", val=samp.annot)
 
+# summarize snps before thinning
 snpgdsSummary("pseudo")
 snpgdsSummary("SL")
-#pca <- snpgdsPCA(genofile, num.thread=2)
-#pc.percent <- pca$varprop*100
-#head(round(pc.percent, 2))
 
 # LD prunning I am setting ld.threshold=1 to minimize ld filtering
 pseudo_snpset <- snpgdsLDpruning(pseudo_genofile, ld.threshold=0.1,  method = c("composite"), missing.rate=0, ver
 bose = TRUE)
-# 335 SNPs retained
 SL_snpset <- snpgdsLDpruning(SL_genofile, ld.threshold=0.1,  method = c("composite"), missing.rate=0, verbose = T
 RUE)
-# 311 SNPs retained
+
 pseudo_snpset.id <- unlist(pseudo_snpset)
 SL_snpset.id <- unlist(SL_snpset)
 
-# for LD prunning, uncomment next line and comment the one after that
+# PCA
 pseudo_pca <- snpgdsPCA(pseudo_genofile, snp.id=pseudo_snpset.id, num.thread=2)
 SL_pca <- snpgdsPCA(SL_genofile, snp.id=SL_snpset.id, num.thread=2)
-# no LD pruning
-#pca <- snpgdsPCA(genofile)
+
+# summarize variation on each eigenvector
 pseudo_pc.percent <- pseudo_pca$varprop*100
 SL_pc.percent <- SL_pca$varprop*100
-head(round(pseudo_pc.percent, 2))
-# updated for WGS
-# [1] 37.49 27.34 22.54 10.19  2.45  0.00
-head(round(SL_pc.percent, 2))
-# updated for WGS
-# [1] 36.07 25.28 19.74 14.73  4.19  0.00
 
+head(round(pseudo_pc.percent, 2))
+# [1] 39.27 26.54 22.24  8.85  3.09  0.00
+head(round(SL_pc.percent, 2))
+# [1] 40.08 26.05 19.12  9.72  5.03  0.00
 
 tab <- data.frame(sample.id = pseudo_pca$sample.id,
     EV1 = pseudo_pca$eigenvect[,1],    # the first eigenvector
@@ -121,7 +112,7 @@ pseudo_plot<-ggplot(data=tab, aes(x=EV1,y=EV2, label = samp.fieldid, color = sam
     # italicize species names
     #theme(legend.text = element_text(face="italic"))+ 
     # move the legend
-   # theme(legend.position = c(.8, .1)) +
+    # theme(legend.position = c(.8, .1)) +
     # add a title
     ggtitle("Not sex-linked") + 
     # remove boxes around legend symbols
